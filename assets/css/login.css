@@ -1,0 +1,49 @@
+.registerForm,
+.loginForm,
+.createForm {
+    width: 40%;
+    margin: 50px auto 0 auto;
+    border: solid 1px black;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: white;
+    font-size: 16px;
+  }
+.registerForm h2,
+  .loginForm h2 {
+    margin-top: 0px;
+    text-align: center;
+  }
+.registerForm hr,
+  .loginForm hr {
+      width: 100%;
+  }
+.registerForm input,
+  .loginForm input,
+  .createForm input {
+    line-height: 25px;
+    width: 100%;
+  }
+
+  .createForm textarea {
+    width:100%;
+    height:100px;
+    resize:none;
+  }
+
+  .signupLink a {
+    font-size: 18px;
+  }
+
+.loginLinkBox {
+    text-align: center;
+    padding-top: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .registerForm,
+  .loginForm,
+  .createForm {
+      width:90%;
+  }
+}
