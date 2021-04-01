@@ -69,11 +69,11 @@ return $errors;
 
 //---validate---comments
 
-function validateComments($regInfo) {
+function validateComments($commentInfo) {
 
     $errors = array();
 
- if (empty($regInfo['comment_content'])) {
+ if (empty($commentInfo['comment_content'])) {
      array_push($errors, 'You cannot post an empty comment');
  }
 

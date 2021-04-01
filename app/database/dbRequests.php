@@ -57,10 +57,21 @@ function selectAllWithAvatar($table, $conditions = [])
 
 }
 
+function getLatestComment($post_id) {
+    global $conn;
+
+    $sql ="SELECT c.*, u.username, u.avatar_image FROM comment_table AS c JOIN user_table AS u ON c.commenter_id_aka_user_id=u.user_id WHERE c.comment_post_id=? ORDER BY c.comment_id desc limit 1";
+
+    $stmt = executeQuery($sql, ['comment_post_id'=> $post_id]);
+    $data = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    return $data;
+
+}
+
 function getRelatedComments($post_id) {
     global $conn;
 
-    $sql ="SELECT c.*, u.username, u.avatar_image FROM comment_table AS c JOIN user_table AS u ON c.commenter_id_aka_user_id=u.user_id WHERE c.comment_post_id=? ORDER BY c.comment_id ASC";
+    $sql ="SELECT c.*, u.username, u.avatar_image FROM comment_table AS c JOIN user_table AS u ON c.commenter_id_aka_user_id=u.user_id WHERE c.comment_post_id=? ORDER BY c.comment_id desc";
 
     $stmt = executeQuery($sql, ['comment_post_id'=> $post_id]);
     $data = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
