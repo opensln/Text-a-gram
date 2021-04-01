@@ -25,7 +25,7 @@ if (comment_content != "") {
         comment_content: comment_content,
       },
       success: function (response) {
-        $(".commentFormContainer").prepend("<p>"+ response + "</p>");
+        $("#test2Div").prepend("<div class='displayCommentBox'><p>"+ response + "</p></div>");
         //TODO - Create the shape of the comment Box
       },
     });
