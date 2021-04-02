@@ -2,6 +2,7 @@
 include './app/controllers/userscontroller.php'; //access to dbRequests through this file
 include './app/controllers/commentscontroller.php';
 include './app/controllers/postscontroller.php';
+
 ?>
 
 <?php
@@ -14,7 +15,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
 ?>
 <?php include "./app/includes/header.php";?>
 
-<p id="testDiv">Start with something inside</p>
+<!-- <p id="testDiv">...testDiv</p> -->
 
   <a class="backButtonHolder" href='./conversations.php' ><button class="backButton">Back to Post List</button></a>
   <div class='singlePostContainer'>
@@ -58,12 +59,12 @@ $relatedComments = getRelatedComments($_GET['post_id']);
             <?php if ($update == true): ?>
                 <input style='display:none;' type='text' name='comment_id' value='<?php echo $editing_id ?>'>
 
-                <textarea name='comment_content' placeholder='type your comment here...'><?php echo $editing_text ?></textarea>
-                <button class='commentUpdateBtn btn btn-success' type='submit' name='update-comment'>Update</button>
+                <textarea id="updatedCommentContent" name='comment_content' placeholder='type your comment here...'><?php echo $editing_text ?></textarea>
+                <button id="updateCommentBtn" class='commentUpdateBtn btn btn-success' type='' name=''>Update it</button>
                 <a class='cancelUpdateBtn btn btn-danger float-right' href="./displaysinglepage.php?post_id=<?php echo $_GET['post_id'] ?>&parentId&reply">Cancel Update</a>
             <?php else: ?>
                 <textarea id="comment_content" name='comment_content' placeholder='type your comment here...'></textarea>
-                <button class='commentSubmitBtn' type='submit' name=''>Submit Comment</button>
+                <button id="commentSubmitBtn" class='commentSubmitBtn' type='' name=''>Submit Comment</button>
             <?php endif;?>
 
         </form>
@@ -77,13 +78,13 @@ $relatedComments = getRelatedComments($_GET['post_id']);
         <?php endif;?>
 
 <?php endif;?>
-<div id="test2Div">
+<div id="commentListDiv">
     <?php foreach ($relatedComments as $item): ?>
         <?php if ($item['comment_parent_id'] <= 0): ?><!--main if statement-->
-            <div class="displayCommentBox" id="comment_id<?php echo $item['comment_id']?>">
+            <div class="displayCommentBox" id="commentBox_id<?php echo $item['comment_id']?>">
                 <input hidden type="text" name='comment_id' value='comment_id: <?php echo $item['comment_id'] ?>'>
-                <input style='display:none;' type="text" name='comment_post_id' value='comment_post_id: <?php echo $item['comment_post_id'] ?>' style="color:lightgrey;">
-                <input style='display:none;' type='text' name='commenter_id_aka_user_id' value=<?php echo $item['commenter_id_aka_user_id'] ?>>
+                <input id='comment_post_id<?php echo $item['comment_id']?>'  style='display:none;' type="text" name='comment_post_id' value='<?php echo $item['comment_post_id'] ?>' style="color:lightgrey;">
+                <input id='commenter_id_aka_user_id<?php echo $item['comment_id']?>'  style='display:none;' type='text' name='commenter_id_aka_user_id' value=<?php echo $item['commenter_id_aka_user_id'] ?>>
                 <img class="avatarHolderSinglePage" width="30px" height="30px" src='./assets/images/avatars/<?php echo $item['avatar_image'] ?>' alt="<?php echo $item['avatar_image'] ?>">
                 <p class="commentBoxInfoBar" type='text' name='comment_content' >
                     <span><strong><?php echo $item['username'] ?></strong></span> <?php echo date('F, j, Y', strtotime($item['date'])) ?>:
@@ -91,55 +92,10 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                 <p> <?php echo $item['comment_content'] ?></p>
 
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="./displaysinglepage.php?post_id=<?php echo $_GET['post_id'] ?>&parentId=<?php echo $item['comment_id'] ?>&reply=true" class="btn replyBtn">Reply</a>
+                    <button type='button' onclick='makeReplyFormVisible(this);' value='<?php echo $item['comment_id']?>' class='btn replyBtn'>Reply</button>
                 <?php endif;?>
 
-                <?php if ($_GET['parentId'] =="nullSpacer"):?>
-                <p>Ola!</p>
-                <?php elseif ($_GET['parentId'] == $item['comment_id']): ?> <!--Show Reply Form if this is true--This can only happen if the reply button is clicked-->
-
-            <!--Start Reply Form-->
-                <div class='replyFormContainer'>
-                    <form method='POST' action='displaysinglepage.php'> 
-
-                    <!--for Debugging-->
-                        <p style="display:none">Logged in as: <?php echo $_SESSION['username'] ?></p>
-                        <p style="display:none">User Id: <?php echo $_SESSION['user_id'] ?></p>
-                        <p style="display:none">Commenting on post_id: <?php echo $requestedInfo['post_id'] ?> <i> <?php echo $requestedInfo['post_title'] ?> </i></p>
-                        <p style="display:none">New ParentId: <?php echo $item['comment_id'] ?></p>
-                        <p style="display:none">Parent Comment Content<i> <?php echo $item['comment_content'] ?> </i></p>
-                    <!--for submission-->
-                        <input hidden type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id'] ?>'>
-                        <input hidden type='text' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
-                        <input hidden type='text' name='comment_parent_id' value='<?php echo $item['comment_id']?>'>
-                        <textarea name='comment_content' placeholder='type your reply here...'><?php echo $editing_text ?></textarea>
-                        <button class='submitreplyBtn btn btn-success' type='submit' name='reply-comment'>Reply</button>
-                        <a class='cancelReplyBtn btn btn-danger float-right' href="./displaysinglepage.php?post_id=<?php echo $_GET['post_id'] ?>&parentId&reply">Cancel Reply</a>
-                    </form>
-                </div>
-        <?php endif;?>
-            <!--End Reply Form-->
- 
-        <?php if ($update == true && $_SESSION['user_id'] == $item['commenter_id_aka_user_id']): ?> 
-        <p class="text-center"> updating comment...</p>
-        <?php else: ?> <!--If(1) Show userBar-->
-                <!--if user is REPLYING to their own comment then hide edit buttons-->
-                <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $item['commenter_id_aka_user_id'] && $_GET['reply'] == true): ?> <!--If(2)-->
-                <!--this is showing nothing as opposed to showing the edit buttons-->
-                <?php else: ?>
-                        <!--If the user is logged in "NOT REPLYING" and it is their own comment then show the edit and delete buttons-->
-                        <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $item['commenter_id_aka_user_id']): ?> <!--If(3)-->
-                            <div class="userBtnBar">
-                                <form  id="editForm" method='POST' action='displaysinglepage.php'>
-                                    <a class="btn btn-successx editBtn" href="./displaysinglepage.php?post_id=<?php echo $_GET['post_id'] ?>&parentId&editing_id=<?php echo $item['comment_id'] ?>" >Edit</a>
-                                    <input type='hidden' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
-                                    <input type="hidden" name="comment_id" value="<?php echo $item['comment_id'] ?>">
-                                    <input type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value="Delete" onclick="return confirm('Are you sure you want to delete this comment?');">
-                                </form>
-                            </div>
-                        <?php endif;?><!-- end If(3)-->
-                <?php endif;?> <!-- end If(2)-->
-        <?php endif;?> <!--End If(1) UserBar-->
+    
     </div>
     <!--Start Reply loop-->
     <?php foreach ($relatedComments as $reply): ?>
@@ -187,6 +143,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
     </script>
 
     <script type="text/javascript" src="./ajaxrequests.js" ></script>
+    <script type="text/javascript" src="./helpers.js" ></script>
 
 </body>
 </html>

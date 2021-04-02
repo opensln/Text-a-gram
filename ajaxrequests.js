@@ -1,37 +1,74 @@
-function submitComment() {
+$(document).ready(function () {
 
-//alert("Here instead of form submission");
+  // $("body").on("click", "????", function (event) {
+  //   event.preventDefault();
+  // }
 
-var comment_content = $("#comment_content").val();
-//console.log(comm_id);
-var commenter_id_aka_user_id = $("#commenter_id_aka_user_id").val();
-//console.log(date);
-var comment_post_id = $("#comment_post_id").val();
-//console.log(message);
+  //TODO document ready for update
+  $("body").on("click", "#submitReplyBtn", function (event) {
+    event.preventDefault();
 
-// $("#testDiv").append(comment_content);
-// $("#testDiv").append(commenter_id_aka_user_id);
-// $("#testDiv").append(comment_post_id);
+    var replyCommentContent = $("#replyCommentContent").val();
+    var commenter_id_aka_user_id = $("#replyUserId").val();
+    var comment_post_id = $("#replyPostId").val();
+    var comment_parent_id = $("#replyParentId").val();
 
-if (comment_content != "") {
-    $.ajax({
-      method: "POST",
-      url: "displaysinglepage.php",
-      dataType: "text",
-      data: {
-        submitComment: 1,
-        comment_post_id: comment_post_id,
-        commenter_id_aka_user_id: commenter_id_aka_user_id,
-        comment_content: comment_content,
-      },
-      success: function (response) {
-        $("#test2Div").prepend("<div class='displayCommentBox'><p>"+ response + "</p></div>");
-        //TODO - Create the shape of the comment Box
-      },
-    });
-  } else {
-    alert("you cannot send an empty message");
-  }
+    alert("replyBtn submission");
+    alert(replyCommentContent, "content");
+    alert(commenter_id_aka_user_id);
+    alert(comment_post_id);
+    alert(comment_parent_id);
 
-return false;
-}
+    // if (comment_content != "") {
+    //   $.ajax({
+    //     method: "POST",
+    //     url: "displaysinglepage.php",
+    //     dataType: "text",
+    //     data: {
+    //       submitComment: 1,
+    //       comment_post_id: comment_post_id,
+    //       commenter_id_aka_user_id: commenter_id_aka_user_id,
+    //       comment_content: updatedContent,
+    //     },
+    //     success: function (response) {
+    //       $("#commentListDiv").prepend(response);
+    //       //TODO - Create the shape of the comment Box
+    //     },
+    //   });
+    // } else {
+    //   alert("you cannot send an empty message from ajax");
+    // }
+
+  });
+
+  //TODO document ready for submit
+  $("body").on("click", "#commentSubmitBtn", function (event) {
+    event.preventDefault();
+
+    var comment_content = $("#comment_content").val();
+    var commenter_id_aka_user_id = $("#commenter_id_aka_user_id").val();
+    var comment_post_id = $("#comment_post_id").val();
+    //alert("Here instead of form submission");
+  
+    if (comment_content != "") {
+      $.ajax({
+        method: "POST",
+        url: "displaysinglepage.php",
+        dataType: "text",
+        data: {
+          submitComment: 1,
+          comment_post_id: comment_post_id,
+          commenter_id_aka_user_id: commenter_id_aka_user_id,
+          comment_content: comment_content,
+        },
+        success: function (response) {
+          $("#commentListDiv").prepend(response);
+          //TODO - Create the shape of the comment Box
+        },
+      });
+    } else {
+      alert("you cannot send an empty message from ajax");
+    }
+  });
+  return false;
+});

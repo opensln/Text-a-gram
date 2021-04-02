@@ -170,6 +170,10 @@ margin-top: 5px;;
   
 }
 
+.replyFormContainer {
+ 
+}
+
 .replyFormContainer textarea {
     width:100%;
     background-color: rgb(210,210,210);
@@ -209,12 +213,20 @@ p {
 
 .commentFormContainer .commentUpdateBtn,
 .commentFormContainer .cancelUpdateBtn,
-.replyFormContainer .submitreplyBtn,
+.replyFormContainer .submitReplyBtn,
 .replyFormContainer .cancelReplyBtn
 {
     box-sizing: border-box;
     width: 49%;
 }
+
+/* button .submitReplyBtn {
+    width:49%;
+}
+
+.cancelreplyBtn {
+    width:49%;
+} */
 
 .backButtonHolder {
     display:block;
