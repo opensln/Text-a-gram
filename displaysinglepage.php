@@ -103,8 +103,8 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                         <input id='reply_user_id<?php echo $item['comment_id']?>' hiddenx type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id'] ?>'>
                         <input id='reply_post_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
                         <input id='reply_parent_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_parent_id' value='<?php echo $item['comment_id']?>'>
-                        <textarea id='reply_comment_content<?php echo $item['comment_id']?>' name='comment_content' placeholder='type your reply here...'></textarea>
-                        <button id='submitReplyBtn'
+                        <textarea id='reply_comment_content_id<?php echo $item['comment_id']?>' name='comment_content' placeholder='type your reply here...'></textarea>
+                        <button id='submitReplyBtn<?php echo $item['comment_id']?>'
                                 class='submitReplyBtn btn btn-success'
                                 type=''
                                 value='<?php echo $item['comment_id']?>'
@@ -119,24 +119,6 @@ $relatedComments = getRelatedComments($_GET['post_id']);
         
             <!--End Reply Form-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
     </div>
     <!--Start Reply loop-->
     <?php foreach ($relatedComments as $reply): ?>
@@ -156,7 +138,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                     <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $reply['commenter_id_aka_user_id']): ?>
                         <br>
                         <div class="userBtnBar">
-                            <form  id="editForm" method='POST' action='displaysinglepage.php'>
+                            <form  id="editForm<?php echo $reply['comment_id'] ?>" method='POST' action='displaysinglepage.php'>
                                 <input type='hidden' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
                                 <input type="hidden" name="comment_id" value="<?php echo $reply['comment_id'] ?>">
                                 <input type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value="Delete" onclick="return confirm('Are you sure you want to delete this reply?');">
@@ -183,7 +165,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
     }
     </script>
 
-    <script type="text/javascript" src="./ajaxrequests.js" ></script>
+    <script type="text/javascript" src="./ajaxFormSubmissions.js" ></script>
     <script type="text/javascript" src="./helpers.js" ></script>
 
 </body>

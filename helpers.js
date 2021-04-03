@@ -7,6 +7,10 @@ $("body").on("click", ".replyBtn", function (event) {
 
   var replyBtnId = event.target.value;
 
+  var reply_comment_content_id = "#reply_comment_content_id"+replyBtnId;
+
+  $(reply_comment_content_id).val(''); //Clear the reply textarea
+
   var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
 
   $(replyFormContainer_id).css("display", "block");
@@ -40,10 +44,6 @@ $("body").on("click", ".dynamicReplyBtn", function (event) {
     var comment_post_id = event.target.getAttribute("data-comment_post_id");
     console.log(comment_post_id + "comment post id if from data-dash");
 
-
-
-   
-   
     makeDynamicReplyFormVisible(currentParentId, comment_post_id, commenter_id_aka_user_id );
 });
 

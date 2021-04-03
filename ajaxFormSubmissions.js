@@ -4,8 +4,8 @@ function submitComment() {
 
 $(document).ready(function () {
 
-  //TODO document ready for update
-  $("body").on("click", "#submitReplyBtn", function (event) {
+  //Submit-Reply
+  $("body").on("click", ".submitReplyBtn", function (event) {
     event.preventDefault();
 
     //alert(event.target.name);
@@ -14,8 +14,8 @@ $(document).ready(function () {
     var comment_parent_id = event.target.value;
     console.log(comment_parent_id);
 
-    var reply_comment_content = $("#reply_comment_content" + replyBtnId).val();
-    console.log(reply_comment_content + " This should be the tag for jQuery");
+    var reply_comment_content_id = $("#reply_comment_content_id" + replyBtnId).val();
+    console.log(reply_comment_content_id + " This should be the tag for jQuery");
 
     var commenter_id_aka_user_id = $("#reply_user_id" + replyBtnId).val();
     console.log(commenter_id_aka_user_id + " commenter id This should be the tag for jQuery");
@@ -25,7 +25,7 @@ $(document).ready(function () {
 
     var commentBox_id = "#commentBox_id" + (replyBtnId);
 
-    if (reply_comment_content != "") {
+    if (reply_comment_content_id != "") {
       $.ajax({
         method: "POST",
         url: "displaysinglepage.php",
@@ -35,12 +35,17 @@ $(document).ready(function () {
           comment_parent_id: comment_parent_id,
           comment_post_id: comment_post_id,
           commenter_id_aka_user_id: commenter_id_aka_user_id,
-          comment_content: reply_comment_content,
+          comment_content: reply_comment_content_id,
         },
         success: function (response) {
           console.log(response);
           $(commentBox_id).after("<div class='displayReplyBox'>" + response + "</div>");
+          $("#replyFormContainer_id").remove();
           //TODO - Create the shape of the comment Box
+          var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
+          $(replyFormContainer_id).css("display", "none");
+          // $(replyFormContainer_id).html('');
+
         },
       });
     } else {
@@ -49,7 +54,7 @@ $(document).ready(function () {
     
   });
 
-  //TODO document ready for submit
+  //Submit-Comment
   $("body").on("click", "#commentSubmitBtn", function (event) {
     event.preventDefault();
 
