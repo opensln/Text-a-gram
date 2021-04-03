@@ -89,3 +89,21 @@
                 </div>
         
             <!--End Reply Form-->
+
+            // var replyBtnName = event.target.name;
+
+// var replyBtnId = replyBtnName.substring(8);
+
+//Tagging for jQuery
+ var comment_post_idTag = "#comment_post_id" + currentId;
+  console.log(comment_post_idTag + " comment Post");
+  var comment_post_id = $(comment_post_idTag).val();
+  console.log("comment post id " + comment_post_id);
+
+  var commenter_id_aka_user_idTag = "#commenter_id_aka_user_id" + currentId;
+  console.log(commenter_id_aka_user_idTag + " commenter_id_aka_user_id");
+  var commenter_id_aka_user_id = $(commenter_id_aka_user_idTag).val();
+  console.log("user id " + commenter_id_aka_user_id);
+
+  var replyBtnTag = "#replyBtn" + currentId;
+  console.log(replyBtnTag + " Tag");
