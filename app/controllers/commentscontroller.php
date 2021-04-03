@@ -142,8 +142,8 @@ if(isset($_POST['update-comment'])) {
 
 }
 
-if(isset($_POST['reply-comment'])) {
-    unset($_POST['reply-comment']);
+if(isset($_POST['replyComment'])) {
+    unset($_POST['replyComment']);
 
     $errors = validateComments($_POST);
 
@@ -153,13 +153,19 @@ if(isset($_POST['reply-comment'])) {
 
     //logProg($_POST);
     //logProg('current redirect value: ' .$redirectPostValue);
-    $user_id = create('comment_table', $_POST);
-    header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
-    //logProg($user_id);
+    $newComment_id = create('comment_table', $_POST);
+    //logProg($newComment_id);
+    $latestComment = getLatestComment($redirectPostValue);
+
+    //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
+
+
+    //TODO Build dynamic replyDisplayBox from here to send back to the ajax
+    exit($latestComment[0]['comment_content']);
     } else {
     //logProg($errors);
     
-    header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply&emptycomment=true");
+    //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply&emptycomment=true");
     
     }
 

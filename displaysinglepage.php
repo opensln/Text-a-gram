@@ -100,11 +100,19 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                     <form method='POST' action='' onsubmit='return submitComment();'> 
              
                     <!--for submission-->
-                        <input id='replyUserId<?php echo $item['comment_id']?>' hiddenx type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id'] ?>'>
+                        <input id='reply_user_id<?php echo $item['comment_id']?>' hiddenx type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id'] ?>'>
                         <input id='reply_post_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
-                        <input id='replyParentId<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_parent_id' value='<?php echo $item['comment_id']?>'>
-                        <textarea id='replyCommentContent<?php echo $item['comment_id']?>' name='comment_content' placeholder='type your reply here...'></textarea>
-                        <button id='submitReplyBtn<?php echo $item['comment_id']?>' class='submitReplyBtn btn btn-success' type='' name='reply-comment'>Reply</button>
+                        <input id='reply_parent_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_parent_id' value='<?php echo $item['comment_id']?>'>
+                        <textarea id='reply_comment_content<?php echo $item['comment_id']?>' name='comment_content' placeholder='type your reply here...'></textarea>
+                        <button id='submitReplyBtn'
+                                class='submitReplyBtn btn btn-success'
+                                type=''
+                                value='<?php echo $item['comment_id']?>'
+                                name=''
+                                data-commenter_id_aka_user_id='<?php echo $_SESSION['user_id'] ?>'
+                                data-comment_post_id='<?php echo $requestedInfo['post_id'] ?>'
+                                data-comment_parent_id='<?php echo $item['comment_id']?>'                              
+                                >Reply</button>
                         <button id='cancelReplyBtn<?php echo $item['comment_id']?>' class='cancelReplyBtn btn btn-danger float-right' type='' value='<?php echo $item['comment_id'] ?>' onclick=''>Cancel Reply</button>
                     </form>
                 </div>
