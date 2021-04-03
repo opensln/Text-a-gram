@@ -12,17 +12,10 @@ $(document).ready(function () {
     var replyBtnId = event.target.value;
 
     var comment_parent_id = event.target.value;
-    console.log(comment_parent_id);
-
+    //Tagging variables for jQuery
     var reply_comment_content_id = $("#reply_comment_content_id" + replyBtnId).val();
-    console.log(reply_comment_content_id + " This should be the tag for jQuery");
-
     var commenter_id_aka_user_id = $("#reply_user_id" + replyBtnId).val();
-    console.log(commenter_id_aka_user_id + " commenter id This should be the tag for jQuery");
-
     var comment_post_id = $("#reply_post_id" + replyBtnId).val();
-    console.log(comment_post_id + " comment_post_id This should be the tag for jQuery");
-
     var commentBox_id = "#commentBox_id" + (replyBtnId);
 
     if (reply_comment_content_id != "") {

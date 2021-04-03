@@ -23,7 +23,7 @@ if(isset($_POST['showReplyForm'])) {
     $responseString.= "<input hidden type='text' name='comment_parent_id' value='".$_POST['comment_parent_id']."'>";
     $responseString.= "<textarea name='comment_content' placeholder='type your reply here...'></textarea>";
     $responseString.= "<button id='submitReplyBtn' class='submitReplyBtn btn btn-success' type='' name='reply-comment'>Reply</button>";
-    $responseString.= "<button class='cancelReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
+    $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
     $responseString.= "</form></div>";
 
     exit($responseString);
@@ -60,18 +60,17 @@ if(isset($_POST['submitComment'])) {
     $responseString .="<p class='commentBoxInfoBar' type='text' name='comment_content'>";
     $responseString .="<span><strong>".$latestComment[0]['username']."</strong></span>"." ".$HumanDate.":";
     $responseString.= "<p>".$latestComment[0]['comment_content']."</p>";
-    $responseString.= "<button type='button' 
+    $responseString.= "<button
+                        id='replyBtn".$latestComment[0]['comment_id']."'
+                        type='button' 
                         onclick='' 
                         value='".$latestComment[0]['comment_id']."'
                         class='btn dynamicReplyBtn'
                         name='replyBtn".$latestComment[0]['comment_id']."'
                         data-commenter_id_aka_user_id='".$latestComment[0]['commenter_id_aka_user_id']."'
                         data-comment_post_id='".$latestComment[0]['comment_post_id']."'
-                        >Reply</button></div>";
+                        >Reply</button>";
 
-    // if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id'] && $_GET['reply'] == true) {
-    //     //this is showing nothing as opposed to showing the edit buttons
-    // } else
     //If the user is logged in "NOT REPLYING" and it is their own comment then show the edit and delete buttons-->
     if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id']) { //If(3)-->
     $responseString.= "<div class='userBtnBar'>";
@@ -82,7 +81,8 @@ if(isset($_POST['submitComment'])) {
     $responseString.= "<input type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='Delete' onclick='return confirm('Are you sure you want to delete this comment?');'>";
     $responseString.= "</form></div>";
 
-     } //end If(3)
+     } else//end If(3)
+     $responseString.= "</div>";
     exit($responseString);
     //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
     //logProg($user_id);
@@ -90,7 +90,7 @@ if(isset($_POST['submitComment'])) {
     } else {
     logProg($errors);
     
-    //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply&emptycomment=true");
+    header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply&emptycomment=true");
     
     }
 }

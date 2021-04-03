@@ -18,6 +18,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
 <!-- <p id="testDiv">...testDiv</p> -->
 
   <a class="backButtonHolder" href='./conversations.php' ><button class="backButton">Back to Post List</button></a>
+  <!--Post Container-->
   <div class='singlePostContainer'>
 
         <p style='display:none' ><?php echo $requestedInfo['poster_id_aka_user_id'] ?></p>
@@ -38,6 +39,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
         <?php endif;?>
 
     </div>
+    <!--End Post Container-->
     <hr>
 
 
@@ -69,6 +71,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
 
         </form>
     </div>
+    <!--Show if user is not logged in-->
 <?php else: ?>
 
         <?php if (empty($relatedComments)): ?>
@@ -77,7 +80,8 @@ $relatedComments = getRelatedComments($_GET['post_id']);
             <p class="makeCommentNotice"><a href="./loginform.php?post_id=<?php echo $requestedInfo['post_id'] ?>">Log in</a> to make a comment.</hp>
         <?php endif;?>
 
-<?php endif;?>
+<?php endif;?> <!--Options for user who is not logged in-->
+
 <div id="commentListDiv">
     <?php foreach ($relatedComments as $item): ?>
         <?php if ($item['comment_parent_id'] <= 0): ?><!--main if statement-->
@@ -95,14 +99,14 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                     <button id='replyBtn<?php echo $item['comment_id']?>' type='button' onclick='' value='<?php echo $item['comment_id']?>' class='btn replyBtn' name='replyBtn<?php echo $item['comment_id']?>'>Reply</button>
                 <?php endif;?>
 
-                            <!--Start Reply Form-->
-                            <div id='replyFormContainer_id<?php echo $item['comment_id'] ?>' class='replyFormContainer'> <!--Only visible by folloeing the reply url-->
+                <!--Start Reply Form-->
+                <div id='replyFormContainer_id<?php echo $item['comment_id'] ?>' class='replyFormContainer'> <!--Only visible by folloeing the reply url-->
                     <form method='POST' action='' onsubmit='return submitComment();'> 
              
                     <!--for submission-->
-                        <input id='reply_user_id<?php echo $item['comment_id']?>' hiddenx type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id'] ?>'>
-                        <input id='reply_post_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
-                        <input id='reply_parent_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_parent_id' value='<?php echo $item['comment_id']?>'>
+                        <input hidden id='reply_user_id<?php echo $item['comment_id']?>' hiddenx type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id'] ?>'>
+                        <input hidden id='reply_post_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
+                        <input hidden id='reply_parent_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_parent_id' value='<?php echo $item['comment_id']?>'>
                         <textarea id='reply_comment_content_id<?php echo $item['comment_id']?>' name='comment_content' placeholder='type your reply here...'></textarea>
                         <button id='submitReplyBtn<?php echo $item['comment_id']?>'
                                 class='submitReplyBtn btn btn-success'
@@ -116,7 +120,6 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                         <button id='cancelReplyBtn<?php echo $item['comment_id']?>' class='cancelReplyBtn btn btn-danger float-right' type='' value='<?php echo $item['comment_id'] ?>' onclick=''>Cancel Reply</button>
                     </form>
                 </div>
-        
             <!--End Reply Form-->
 
     </div>
