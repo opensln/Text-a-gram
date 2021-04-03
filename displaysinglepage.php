@@ -81,14 +81,14 @@ $relatedComments = getRelatedComments($_GET['post_id']);
         <?php endif;?>
 
 <?php endif;?> <!--Options for user who is not logged in-->
-
+<?php echo $reply ?>
 <div id="commentListDiv">
     <?php foreach ($relatedComments as $item): ?>
         <?php if ($item['comment_parent_id'] <= 0): ?><!--main if statement-->
-            <div class="displayCommentBox" id="commentBox_id<?php echo $item['comment_id']?>">
+            <div class="displayCommentBox" id="commentBox_id<?php echo $item['comment_id'] ?>">
                 <input hidden type="text" name='comment_id' value='comment_id: <?php echo $item['comment_id'] ?>'>
-                <input id='comment_post_id<?php echo $item['comment_id']?>'  style='display:none;' type="text" name='comment_post_id' value='<?php echo $item['comment_post_id'] ?>' style="color:lightgrey;">
-                <input id='commenter_id_aka_user_id<?php echo $item['comment_id']?>'  style='display:none;' type='text' name='commenter_id_aka_user_id' value=<?php echo $item['commenter_id_aka_user_id'] ?>>
+                <input id='comment_post_id<?php echo $item['comment_id'] ?>'  style='display:none;' type="text" name='comment_post_id' value='<?php echo $item['comment_post_id'] ?>' style="color:lightgrey;">
+                <input id='commenter_id_aka_user_id<?php echo $item['comment_id'] ?>'  style='display:none;' type='text' name='commenter_id_aka_user_id' value=<?php echo $item['commenter_id_aka_user_id'] ?>>
                 <img class="avatarHolderSinglePage" width="30px" height="30px" src='./assets/images/avatars/<?php echo $item['avatar_image'] ?>' alt="<?php echo $item['avatar_image'] ?>">
                 <p class="commentBoxInfoBar" type='text' name='comment_content' >
                     <span><strong><?php echo $item['username'] ?></strong></span> <?php echo date('F, j, Y', strtotime($item['date'])) ?>:
@@ -96,28 +96,40 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                 <p> <?php echo $item['comment_content'] ?></p>
 
                 <?php if (isset($_SESSION['user_id'])): ?>
-                    <button id='replyBtn<?php echo $item['comment_id']?>' type='button' onclick='' value='<?php echo $item['comment_id']?>' class='btn replyBtn' name='replyBtn<?php echo $item['comment_id']?>'>Reply</button>
+                    <button id='replyBtn<?php echo $item['comment_id'] ?>' type='button' onclick='' value='<?php echo $item['comment_id'] ?>' class='btn replyBtn' name='replyBtn<?php echo $item['comment_id'] ?>'>Reply</button>
                 <?php endif;?>
+
+                    <!--If the user is logged in and it is their own comment then show the edit and delete buttons-->
+                        <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $item['commenter_id_aka_user_id']): ?>
+                            <div id='userBtnBar<?php echo $item['comment_id'] ?>' class="userBtnBar">
+                                <form  id='editForm<?php echo $item['comment_id'] ?>' class='.editForm' method='POST' action='displaysinglepage.php' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>
+                                    <a class="btn btn-successx editBtn" href="./displaysinglepage.php?post_id=<?php echo $_GET['post_id'] ?>&parentId&editing_id=<?php echo $item['comment_id'] ?>&reply" >Edit</a>
+                                    <input type='hidden' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
+                                    <input type="hidden" name="comment_id" value="<?php echo $item['comment_id'] ?>">
+                                    <input type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value="Delete" onclick="return confirm('Are you sure you want to delete this comment?');">
+                                </form>
+                            </div>
+                        <?php endif;?>
 
                 <!--Start Reply Form-->
                 <div id='replyFormContainer_id<?php echo $item['comment_id'] ?>' class='replyFormContainer'> <!--Only visible by folloeing the reply url-->
-                    <form method='POST' action='' onsubmit='return submitComment();'> 
-             
+                    <form method='POST' action='' onsubmit='return submitComment();'>
+
                     <!--for submission-->
-                        <input hidden id='reply_user_id<?php echo $item['comment_id']?>' hiddenx type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id'] ?>'>
-                        <input hidden id='reply_post_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
-                        <input hidden id='reply_parent_id<?php echo $item['comment_id']?>' hiddenx type='text' name='comment_parent_id' value='<?php echo $item['comment_id']?>'>
-                        <textarea id='reply_comment_content_id<?php echo $item['comment_id']?>' name='comment_content' placeholder='type your reply here...'></textarea>
-                        <button id='submitReplyBtn<?php echo $item['comment_id']?>'
+                        <input hidden id='reply_user_id<?php echo $item['comment_id'] ?>' hiddenx type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id'] ?>'>
+                        <input hidden id='reply_post_id<?php echo $item['comment_id'] ?>' hiddenx type='text' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
+                        <input hidden id='reply_parent_id<?php echo $item['comment_id'] ?>' hiddenx type='text' name='comment_parent_id' value='<?php echo $item['comment_id'] ?>'>
+                        <textarea id='reply_comment_content_id<?php echo $item['comment_id'] ?>' name='comment_content' placeholder='type your reply here...'></textarea>
+                        <button id='submitReplyBtn<?php echo $item['comment_id'] ?>'
                                 class='submitReplyBtn btn btn-success'
                                 type=''
-                                value='<?php echo $item['comment_id']?>'
+                                value='<?php echo $item['comment_id'] ?>'
                                 name=''
                                 data-commenter_id_aka_user_id='<?php echo $_SESSION['user_id'] ?>'
                                 data-comment_post_id='<?php echo $requestedInfo['post_id'] ?>'
-                                data-comment_parent_id='<?php echo $item['comment_id']?>'                              
+                                data-comment_parent_id='<?php echo $item['comment_id'] ?>'
                                 >Reply</button>
-                        <button id='cancelReplyBtn<?php echo $item['comment_id']?>' class='cancelReplyBtn btn btn-danger float-right' type='' value='<?php echo $item['comment_id'] ?>' onclick=''>Cancel Reply</button>
+                        <button id='cancelReplyBtn<?php echo $item['comment_id'] ?>' class='cancelReplyBtn btn btn-danger float-right' type='' value='<?php echo $item['comment_id'] ?>' onclick=''>Cancel Reply</button>
                     </form>
                 </div>
             <!--End Reply Form-->
@@ -136,7 +148,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                     <span><strong><?php echo $reply['username'] ?></strong></span> <?php echo date('F, j, Y', strtotime($reply['date'])) ?>:
                 </p>
                 <p> <?php echo $reply['comment_content'] ?></p>
-            
+
                     <!--Start Reply Edit Form--->
                     <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $reply['commenter_id_aka_user_id']): ?>
                         <br>

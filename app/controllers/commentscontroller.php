@@ -6,11 +6,9 @@ $errors = array();
 $editing_id = '';
 $editing_text = '';
 $update = false;
-$replyFormFlag ='';
-
+$reply = 'whatevs';
 
 //--Show Reply Form 
-
 if(isset($_POST['showReplyForm'])) {
  
     //logProg($_POST);
@@ -121,7 +119,6 @@ if(isset($_GET['editing_id'])) {
     //logProg($editing_info);
     $editing_text = $editing_info['comment_content'];
     $update = true;
-
 }
 
 //--Update--comment

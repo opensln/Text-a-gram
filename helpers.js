@@ -15,6 +15,9 @@ $("body").on("click", ".replyBtn", function (event) {
 
   $(replyFormContainer_id).css("display", "block");
 
+var userBtnBarTag = "#userBtnBar" + replyBtnId;
+$(userBtnBarTag).css("display", "none");
+
 });
 
 $("body").on("click", ".cancelReplyBtn", function (event) {
@@ -26,6 +29,9 @@ $("body").on("click", ".cancelReplyBtn", function (event) {
   var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
   
   $(replyFormContainer_id).css("display", "none");
+
+  var userBtnBarTag = "#userBtnBar" + replyBtnId;
+  $(userBtnBarTag).css("display", "block");
 });
 
 $("body").on("click", ".cancelDynamicReplyBtn", function (event) {

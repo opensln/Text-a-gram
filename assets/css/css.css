@@ -245,11 +245,12 @@ p {
     text-align: right;
 }
 
-.userBtnBar #editForm {
+.editForm {
     position: absolute;
     bottom: 5px;
     right: 5px;
-    /* z-index: -100; */
+    width:70%;
+    /* z-index: -100;*/
 }
 
 .editBtn, .delBtn {
