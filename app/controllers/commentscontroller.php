@@ -79,7 +79,7 @@ if(isset($_POST['submitComment'])) {
     $responseString.= "<a class='btn btn-successx editBtn' href='./displaysinglepage.php?post_id=".$redirectPostValue."&parentId&editing_id=".$latestComment[0]['comment_id']."&reply' >Edit</a>";
     $responseString.= "<input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>";
     $responseString.= "<input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>";
-    $responseString.= "<input type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='Delete' onclick=\"return confirm('Are you sure you want to delete this comment?');\">";
+    $responseString.= "<button type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='".$latestComment[0]['comment_id']."' onclick=\"return confirm('Are you sure you want to delete this comment?');\">Delete</button>";
     $responseString.= "</form></div>";
 
      } else//end If(3)
@@ -113,11 +113,9 @@ if(isset($_POST['replyComment'])) {
     $latestComment = getLatestComment($redirectPostValue);
     $HumanDate = date('F, j, Y', strtotime($latestComment[0]['date']));
 
-    $responseString = "<div class='displayReplyBox' id='displayReplyBox'".$latestComment[0]['comment_id']."'>
-    <input hidden value='".$latestComment[0]['comment_parent_id']."'>
-    <input hidden type='text' name='comment_id' value='comment_id:".$latestComment[0]['comment_parent_id']."'>
-    <input style='display:none;' type='text' name='comment_post_id' value='comment_post_id: ".$latestComment[0]['comment_post_id']."' style='color:lightgrey;'>
-    <input style='display:none;' type='text' name='commenter_id_aka_user_id' value='".$latestComment[0]['commenter_id_aka_user_id']."'>
+    $responseString = "<div class='displayReplyBox' id='displayReplyBox".$latestComment[0]['comment_id']."'>
+    <input hidden type='text' name='comment_parent_id' value='comment_id:".$latestComment[0]['comment_parent_id']."'>
+    <input hidden type='text' name='commenter_id_aka_user_id' value='".$latestComment[0]['commenter_id_aka_user_id']."'>
     <img class='avatarHolderSinglePage' width='30px' height='30px' src='./assets/images/avatars/".$latestComment[0]['avatar_image']."' alt='".$latestComment[0]['avatar_image']."'>
     <p class='commentBoxInfoBar' type='text' name='comment_content' >
         <span><strong>".$latestComment[0]['username']."</strong></span>"." ".$HumanDate.":
