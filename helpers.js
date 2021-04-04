@@ -50,18 +50,16 @@ $("body").on("click", ".cancelDynamicReplyBtn", function (event) {
 $("body").on("click", ".dynamicReplyBtn", function (event) {
 
     var currentParentId = event.target.value;
-    var commenter_id_aka_user_id = event.target.getAttribute("data-commenter_id_aka_user_id");
     var comment_post_id = event.target.getAttribute("data-comment_post_id");
 
-    makeDynamicReplyFormVisible(currentParentId, comment_post_id, commenter_id_aka_user_id );
+    makeDynamicReplyFormVisible(currentParentId, comment_post_id);
 });
 
-function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj, commenter_id_aka_user_idObj) {
+function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj) {
   //alert(currentParentIdObj + "from inside makeDynamicReplyFormVisible");
 
   console.log("current parent Id " + currentParentIdObj);
   console.log("comment post id " + comment_post_idObj);
-  console.log("user id " + commenter_id_aka_user_idObj);
 
   var replyBtnTag = "#replyBtn" + currentParentIdObj;
   var commentBoxTag = "#commentBox_id" + (currentParentIdObj); //--remember the # in future
@@ -77,7 +75,6 @@ function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj, com
           showReplyForm: 1,
           comment_parent_id :currentParentIdObj,
           comment_post_id: comment_post_idObj,
-          commenter_id_aka_user_id :commenter_id_aka_user_idObj,
       },
       success: function (response) {
           //console.log(response);

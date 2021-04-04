@@ -14,12 +14,14 @@ if(isset($_POST['showReplyForm'])) {
 
     $responseString = "<div id='replyFormContainer_id".$_POST['comment_parent_id']."' class='dynamicReplyFormContainer'>";
     $responseString.= "<form method='POST' onsubmit='return submitComment()'>";
-    $responseString.= "<input hidden type='text' name='commenter_id_aka_user_id' value='".$_POST['commenter_id_aka_user_id']."'>";
-    $responseString.= "<input hidden type='text' name='commenter_id_aka_user_id' value='".$_SESSION['user_id']."'>";
-    $responseString.= "<input hidden type='text' name='comment_post_id' value='".$_POST['comment_post_id']."'>";
-    $responseString.= "<input hidden type='text' name='comment_parent_id' value='".$_POST['comment_parent_id']."'>";
-    $responseString.= "<textarea name='comment_content' placeholder='type your reply here...'></textarea>";
-    $responseString.= "<button id='submitReplyBtn' class='submitReplyBtn btn btn-success' type='' name='reply-comment'>Reply</button>";
+    $responseString.= "<input id='reply_user_id".$_POST['comment_parent_id']."' hidden type='text' name='commenter_id_aka_user_id' value='".$_SESSION['user_id']."'>";
+    $responseString.= "<input id='reply_post_id".$_POST['comment_parent_id']."' hidden type='text' name='comment_post_id' value='".$_POST['comment_post_id']."'>";
+    $responseString.= "<textarea id='reply_comment_content_id".$_POST['comment_parent_id']."' name='comment_content' placeholder='type your reply here...'></textarea>";
+    $responseString.= "<button  id='submitReplyBtn'
+                                class='submitReplyBtn btn btn-success'
+                                type='' name='reply-comment'
+                                value='".$_POST['comment_parent_id']."'
+                                >Reply</button>";
     $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
     $responseString.= "</form></div>";
 
@@ -65,7 +67,7 @@ if(isset($_POST['submitComment'])) {
                         value='".$latestComment[0]['comment_id']."'
                         class='btn dynamicReplyBtn'
                         name='replyBtn".$latestComment[0]['comment_id']."'
-                        data-commenter_id_aka_user_id='".$latestComment[0]['commenter_id_aka_user_id']."'
+                        data-commenter_id_aka_user_id='".$latestComment[0]['commenter_id_aka_user_id']."' 
                         data-comment_post_id='".$latestComment[0]['comment_post_id']."'
                         >Reply</button>";
 
@@ -117,14 +119,13 @@ if(isset($_POST['replyComment'])) {
     <input style='display:none;' type='text' name='commenter_id_aka_user_id' value='".$latestComment[0]['commenter_id_aka_user_id']."'>
     <img class='avatarHolderSinglePage' width='30px' height='30px' src='./assets/images/avatars/".$latestComment[0]['avatar_image']."' alt='".$latestComment[0]['avatar_image']."'>
     <p class='commentBoxInfoBar' type='text' name='comment_content' >
-        <span><strong>".$latestComment[0]['username']."</strong></span>".$HumanDate.":
+        <span><strong>".$latestComment[0]['username']."</strong></span>"." ".$HumanDate.":
     </p>
     <p>".$latestComment[0]['comment_content']."</p>";
 
         //Start Reply Delete Form--->
         if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id']) {
-    $responseString.= "<br>
-            <div class='userBtnBar'>
+    $responseString.= "<div class='userBtnBar'>
                <form  id='editForm".$latestComment[0]['comment_id']."' method='POST' action='displaysinglepage.php'>
                     <input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>
                     <input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>

@@ -111,7 +111,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                             </div>
                         <?php endif;?>
 
-                <!--Start Reply Form-->
+                <!--Start Hidden Reply Form-->
                 <div id='replyFormContainer_id<?php echo $item['comment_id'] ?>' class='replyFormContainer'> <!--Only visible by folloeing the reply url-->
                     <form method='POST' action='' onsubmit='return submitComment();'>
 
@@ -124,7 +124,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                                 class='submitReplyBtn btn btn-success'
                                 type=''
                                 value='<?php echo $item['comment_id'] ?>'
-                                name=''
+                                name='submitReplyBtn from normal page load which was made visible after on click'
                                 data-commenter_id_aka_user_id='<?php echo $_SESSION['user_id'] ?>'
                                 data-comment_post_id='<?php echo $requestedInfo['post_id'] ?>'
                                 data-comment_parent_id='<?php echo $item['comment_id'] ?>'
@@ -132,7 +132,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                         <button id='cancelReplyBtn<?php echo $item['comment_id'] ?>' class='cancelReplyBtn btn btn-danger float-right' type='' value='<?php echo $item['comment_id'] ?>' onclick=''>Cancel Reply</button>
                     </form>
                 </div>
-            <!--End Reply Form-->
+            <!--End Hidden Reply Form-->
 
     </div>
     <!--Start Reply loop-->

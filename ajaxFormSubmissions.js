@@ -10,13 +10,19 @@ $(document).ready(function () {
 
     //alert(event.target.name);
     var replyBtnId = event.target.value;
+    //alert("target value " + event.target.value);
 
-    var comment_parent_id = event.target.value;
-    //Tagging variables for jQuery
-    var reply_comment_content_id = $("#reply_comment_content_id" + replyBtnId).val();
-    var commenter_id_aka_user_id = $("#reply_user_id" + replyBtnId).val();
-    var comment_post_id = $("#reply_post_id" + replyBtnId).val();
+    var comment_parent_id = replyBtnId;
+    var comment_post_id = $("#reply_post_id" + replyBtnId).val(); //Tagging variables for jQuery
+    var commenter_id_aka_user_id = $("#reply_user_id" + replyBtnId).val(); //Tagging variables for jQuery
+    var reply_comment_content_id = $("#reply_comment_content_id" + replyBtnId).val();  //Tagging variables for jQuery
+   
     var commentBox_id = "#commentBox_id" + (replyBtnId);
+
+// console.log(commentBox_id);
+// console.log(comment_post_id);
+// console.log(commenter_id_aka_user_id);
+// console.log(reply_comment_content_id);
 
     if (reply_comment_content_id != "") {
       $.ajax({
@@ -25,13 +31,13 @@ $(document).ready(function () {
         dataType: "text",
         data: {
           replyComment: 1,
-          comment_parent_id: comment_parent_id,
-          comment_post_id: comment_post_id,
-          commenter_id_aka_user_id: commenter_id_aka_user_id,
-          comment_content: reply_comment_content_id,
+          comment_parent_id: comment_parent_id, //Which comment is it attached to?
+          comment_post_id: comment_post_id, //Which post is it attached to?
+          commenter_id_aka_user_id: commenter_id_aka_user_id, //Who is writing the comment?
+          comment_content: reply_comment_content_id, //What are they saying/submitting?
         },
         success: function (response) {
-          console.log(response);
+          //console.log(response);
           $(commentBox_id).after(response);
           $("#replyFormContainer_id").remove();
           //TODO - Create the shape of the comment Box
