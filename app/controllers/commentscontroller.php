@@ -113,7 +113,7 @@ if(isset($_POST['replyComment'])) {
     $latestComment = getLatestComment($redirectPostValue);
     $HumanDate = date('F, j, Y', strtotime($latestComment[0]['date']));
 
-    $responseString = "<div class='displayReplyBox'>
+    $responseString = "<div class='displayReplyBox' id='displayReplyBox'".$latestComment[0]['comment_id']."'>
     <input hidden value='".$latestComment[0]['comment_parent_id']."'>
     <input hidden type='text' name='comment_id' value='comment_id:".$latestComment[0]['comment_parent_id']."'>
     <input style='display:none;' type='text' name='comment_post_id' value='comment_post_id: ".$latestComment[0]['comment_post_id']."' style='color:lightgrey;'>
@@ -130,7 +130,7 @@ if(isset($_POST['replyComment'])) {
                <form  id='editForm".$latestComment[0]['comment_id']."' method='POST' action='displaysinglepage.php' >
                     <input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>
                     <input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>
-                    <input type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='Delete' onclick=\"return confirm('Are you sure you want to delete this reply?');\">
+                    <button type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='".$latestComment[0]['comment_id']."' onclick=\"return confirm('Are you sure you want to delete this reply?');\">Delete</button>
                 </form>
             </div>";
         } 
@@ -146,18 +146,18 @@ if(isset($_POST['replyComment'])) {
 
 //--Delete--comment
 
-if(isset($_POST['delete-comment'])) {
+if(isset($_POST['deleteComment'])) {
     //logProg($_POST);
 
     $deleting_id = $_POST['comment_id'];
     //logProg($deleting_id);
  
-    $redirectPostValue = $_POST['comment_post_id'];
+    // $redirectPostValue = $_POST['comment_post_id'];
     //logProg($redirectPostValue);
 
     $deleting_info = delete('comment_table', $deleting_id);
     //logProg($deleting_info);
-
+    exit("entry ".$deleting_id." Deleted");
     header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
 }
 

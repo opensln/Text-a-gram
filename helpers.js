@@ -91,6 +91,35 @@ function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj) {
     });
 }
 
+//--Delete Comment
+$("body").on("click", ".delBtn", function (event) {
+  event.preventDefault();
+
+  console.log("Value from delBtn " + event.target.value);
+var delBtnCommentId = event.target.value;
+  console.log("triggered from delBtn helper");
+
+  var displayReplyBoxTag = "#displayReplyBox" + delBtnCommentId;
+  var commentBoxTag = "#commentBox_id" + delBtnCommentId; 
+
+  $.ajax({
+    method: "POST",
+    url: "displaysinglepage.php",
+    dataType: "text",
+    data: {
+        deleteComment: 1,
+        comment_id :delBtnCommentId,
+    },
+    success: function (response) {
+        console.log(response);
+
+        $(displayReplyBoxTag).remove(); //If this exists then the commentBox with the same Id will note exist due to the auto increment of the comment ids.
+        $(commentBoxTag).remove();
+    },
+  });
+
+});
+
 function cancelReplyForm(replyForm) {
 
     var replyFormContainer_id = "#replyFormContainer_id"+replyForm.value; //--remember the # in future

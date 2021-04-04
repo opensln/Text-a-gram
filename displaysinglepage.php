@@ -108,11 +108,11 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                     <!--If the user is logged in and it is their own comment then show the edit and delete buttons-->
                         <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $item['commenter_id_aka_user_id']): ?>
                             <div id='userBtnBar<?php echo $item['comment_id'] ?>' class="userBtnBar">
-                                <form  id='editForm<?php echo $item['comment_id'] ?>' class='.editForm' method='POST' action='displaysinglepage.php' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>
+                                <form  id='editForm<?php echo $item['comment_id'] ?>' class='.editForm' method='POST' onsubmit='return submitComment();' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>
                                     <a class="btn btn-successx editBtn" href="./displaysinglepage.php?post_id=<?php echo $_GET['post_id'] ?>&parentId&editing_id=<?php echo $item['comment_id'] ?>&reply" >Edit</a>
                                     <input type='hidden' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
                                     <input type="hidden" name="comment_id" value="<?php echo $item['comment_id'] ?>">
-                                    <input type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value="Delete" onclick="return confirm('Are you sure you want to delete this comment?');">
+                                    <button type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value="<?php echo $item['comment_id'] ?>" onclick="return confirm('Are you sure you want to delete this comment?');">Delete</button>
                                 </form>
                             </div>
                         <?php endif;?>
@@ -122,8 +122,8 @@ $relatedComments = getRelatedComments($_GET['post_id']);
     <!--Start Reply loop-->
     <?php foreach ($relatedComments as $reply): ?>
         <?php if ($reply['comment_parent_id'] == $item['comment_id']): ?>
-            <div class="displayReplyBox">
-                <input hidden value="<?php echo $reply['comment_parent_id'] ?>">
+            <div class="displayReplyBox" id="displayReplyBox<?php echo $reply['comment_id'] ?>">
+                <input hidden name="parentId" value="<?php echo $reply['comment_parent_id'] ?>">
                 <input hidden type="text" name='comment_id' value='comment_id: <?php echo $reply['comment_id'] ?>'>
                 <input style='display:none;' type="text" name='comment_post_id' value='comment_post_id: <?php echo $reply['comment_post_id'] ?>' style="color:lightgrey;">
                 <input style='display:none;' type='text' name='commenter_id_aka_user_id' value=<?php echo $reply['commenter_id_aka_user_id'] ?>>
@@ -137,10 +137,10 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                     <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $reply['commenter_id_aka_user_id']): ?>
                         <br>
                         <div class="userBtnBar">
-                            <form  id="editForm<?php echo $reply['comment_id'] ?>" method='POST' action='displaysinglepage.php'>
+                            <form  id="editForm<?php echo $reply['comment_id'] ?>" method='POST' onsubmit='return submitComment();>
                                 <input type='hidden' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
                                 <input type="hidden" name="comment_id" value="<?php echo $reply['comment_id'] ?>">
-                                <input type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value="Delete" onclick="return confirm('Are you sure you want to delete this reply?');">
+                                <button type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value=<?php echo $reply['comment_id'] ?> onclick="return confirm('Are you sure you want to delete this reply?');">Delete</button>
                             </form>
                         </div>
                     <?php endif;?>
