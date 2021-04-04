@@ -40,6 +40,11 @@ $("body").on("click", ".cancelDynamicReplyBtn", function (event) {
   $(replyBtnTag).removeAttr("disabled");
 
   $(replyFormContainerTag).remove();
+
+  var userBtnBarTag = "#userBtnBar" + replyBtnId;
+  $(userBtnBarTag).css("display", "block");
+
+ 
 });
 
 //--data- attr are used to get id information from the dynamically created elements which otherwise would not be accesible
@@ -47,6 +52,10 @@ $("body").on("click", ".dynamicReplyBtn", function (event) {
 
     var currentParentId = event.target.value;
     var comment_post_id = event.target.getAttribute("data-comment_post_id");
+
+    var replyBtnId = event.target.value;
+    var userBtnBarTag = "#userBtnBar" + replyBtnId;
+    $(userBtnBarTag).css("display", "none");
 
     makeDynamicReplyFormVisible(currentParentId, comment_post_id);
 });

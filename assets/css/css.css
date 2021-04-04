@@ -177,6 +177,7 @@ margin-top: 5px;;
 .replyFormContainer textarea,
 .dynamicReplyFormContainer textarea {
     width:100%;
+    margin: 0 0 -6px 0;
     background-color: rgb(210,210,210);
 }
 
@@ -214,8 +215,8 @@ p {
 
 .commentFormContainer .commentUpdateBtn,
 .commentFormContainer .cancelUpdateBtn,
-.replyFormContainer .submitReplyBtn,
-.replyFormContainer .cancelReplyBtn
+.dynamicReplyFormContainer .submitReplyBtn,
+.dynamicReplyFormContainer .cancelDynamicReplyBtn
 {
     box-sizing: border-box;
     width: 49%;

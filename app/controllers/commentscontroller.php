@@ -19,9 +19,10 @@ if(isset($_POST['showReplyForm'])) {
     $responseString.= "<textarea id='reply_comment_content_id".$_POST['comment_parent_id']."' name='comment_content' placeholder='type your reply here...'></textarea>";
     $responseString.= "<button  id='submitReplyBtn'
                                 class='submitReplyBtn btn btn-success'
-                                type='' name='reply-comment'
+                                type=''
+                                name='reply-comment'
                                 value='".$_POST['comment_parent_id']."'
-                                >Reply</button>";
+                                >Submit Reply</button>";
     $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
     $responseString.= "</form></div>";
 
@@ -74,7 +75,7 @@ if(isset($_POST['submitComment'])) {
     //If the user is logged in "NOT REPLYING" and it is their own comment then show the edit and delete buttons-->
     if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id']) { //If(3)-->
     $responseString.= "<div class='userBtnBar'>";
-    $responseString.= "<form  id='editForm' method='POST' action='displaysinglepage.php'>";
+    $responseString.= "<form  id='editForm' method='POST' action='displaysinglepage.php' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>";
     $responseString.= "<a class='btn btn-successx editBtn' href='./displaysinglepage.php?post_id=".$redirectPostValue."&parentId&editing_id=".$latestComment[0]['comment_id']."&reply' >Edit</a>";
     $responseString.= "<input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>";
     $responseString.= "<input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>";
@@ -126,7 +127,7 @@ if(isset($_POST['replyComment'])) {
         //Start Reply Delete Form--->
         if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id']) {
     $responseString.= "<div class='userBtnBar'>
-               <form  id='editForm".$latestComment[0]['comment_id']."' method='POST' action='displaysinglepage.php'>
+               <form  id='editForm".$latestComment[0]['comment_id']."' method='POST' action='displaysinglepage.php' >
                     <input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>
                     <input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>
                     <input type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='Delete' onclick=\"return confirm('Are you sure you want to delete this reply?');\">
