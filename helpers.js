@@ -1,6 +1,4 @@
-
-
-//listen for any reply button but pas in the value of clicked button using event.target.name
+//listening for buttons that pass in the value of clicked button using event.target.value
 
 $("body").on("click", ".replyBtn", function (event) {
   console.log(event.target.value + "----from .replyBtn event target");
@@ -8,15 +6,13 @@ $("body").on("click", ".replyBtn", function (event) {
   var replyBtnId = event.target.value;
 
   var reply_comment_content_id = "#reply_comment_content_id"+replyBtnId;
-
   $(reply_comment_content_id).val(''); //Clear the reply textarea
 
   var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
-
   $(replyFormContainer_id).css("display", "block");
 
-var userBtnBarTag = "#userBtnBar" + replyBtnId;
-$(userBtnBarTag).css("display", "none");
+  var userBtnBarTag = "#userBtnBar" + replyBtnId;
+  $(userBtnBarTag).css("display", "none");
 
 });
 
@@ -58,8 +54,8 @@ $("body").on("click", ".dynamicReplyBtn", function (event) {
 function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj) {
   //alert(currentParentIdObj + "from inside makeDynamicReplyFormVisible");
 
-  console.log("current parent Id " + currentParentIdObj);
-  console.log("comment post id " + comment_post_idObj);
+  // console.log("current parent Id " + currentParentIdObj);
+  // console.log("comment post id " + comment_post_idObj);
 
   var replyBtnTag = "#replyBtn" + currentParentIdObj;
   var commentBoxTag = "#commentBox_id" + (currentParentIdObj); //--remember the # in future
