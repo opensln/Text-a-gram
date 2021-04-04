@@ -74,8 +74,8 @@ if(isset($_POST['submitComment'])) {
 
     //If the user is logged in "NOT REPLYING" and it is their own comment then show the edit and delete buttons-->
     if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id']) { //If(3)-->
-    $responseString.= "<div class='userBtnBar'>";
-    $responseString.= "<form  id='editForm' method='POST' action='displaysinglepage.php' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>";
+    $responseString.= "<div id='userBtnBar".$latestComment[0]['comment_id']."' class='userBtnBar'>";
+    $responseString.= "<form  id='editForm".$latestComment[0]['comment_id']."' class='.editForm' method='POST' action='displaysinglepage.php' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>";
     $responseString.= "<a class='btn btn-successx editBtn' href='./displaysinglepage.php?post_id=".$redirectPostValue."&parentId&editing_id=".$latestComment[0]['comment_id']."&reply' >Edit</a>";
     $responseString.= "<input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>";
     $responseString.= "<input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>";

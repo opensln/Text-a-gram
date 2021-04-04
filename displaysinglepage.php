@@ -137,7 +137,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                     <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $reply['commenter_id_aka_user_id']): ?>
                         <br>
                         <div class="userBtnBar">
-                            <form  id="editForm<?php echo $reply['comment_id'] ?>" method='POST' onsubmit='return submitComment();>
+                            <form  id="editForm<?php echo $reply['comment_id'] ?>" method='POST' onsubmit='return submitComment();'>
                                 <input type='hidden' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
                                 <input type="hidden" name="comment_id" value="<?php echo $reply['comment_id'] ?>">
                                 <button type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value=<?php echo $reply['comment_id'] ?> onclick="return confirm('Are you sure you want to delete this reply?');">Delete</button>

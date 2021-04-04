@@ -34,11 +34,11 @@ $("body").on("click", ".cancelDynamicReplyBtn", function (event) {
   event.preventDefault();
 
   var replyBtnId = event.target.value;
-  var replyFormContainerTag = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
-
+  
   var replyBtnTag = "#replyBtn" + replyBtnId;
   $(replyBtnTag).removeAttr("disabled");
 
+  var replyFormContainerTag = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
   $(replyFormContainerTag).remove();
 
   var userBtnBarTag = "#userBtnBar" + replyBtnId;
@@ -63,8 +63,8 @@ $("body").on("click", ".dynamicReplyBtn", function (event) {
 function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj) {
   //alert(currentParentIdObj + "from inside makeDynamicReplyFormVisible");
 
-  // console.log("current parent Id " + currentParentIdObj);
-  // console.log("comment post id " + comment_post_idObj);
+  console.log("current parent Id " + currentParentIdObj);
+  console.log("comment post id " + comment_post_idObj);
 
   var replyBtnTag = "#replyBtn" + currentParentIdObj;
   var commentBoxTag = "#commentBox_id" + (currentParentIdObj); //--remember the # in future
