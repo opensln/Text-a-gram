@@ -6,7 +6,6 @@ $errors = array();
 $editing_id = '';
 $editing_text = '';
 $update = false;
-$reply = 'whatevs';
 
 //--Show Reply Form 
 if(isset($_POST['showReplyForm'])) {
@@ -24,6 +23,7 @@ if(isset($_POST['showReplyForm'])) {
     $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
     $responseString.= "</form></div>";
 
+  
     exit($responseString);
 }
 
@@ -76,7 +76,7 @@ if(isset($_POST['submitComment'])) {
     $responseString.= "<a class='btn btn-successx editBtn' href='./displaysinglepage.php?post_id=".$redirectPostValue."&parentId&editing_id=".$latestComment[0]['comment_id']."&reply' >Edit</a>";
     $responseString.= "<input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>";
     $responseString.= "<input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>";
-    $responseString.= "<input type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='Delete' onclick='return confirm('Are you sure you want to delete this comment?');'>";
+    $responseString.= "<input type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='Delete' onclick=\"return confirm('Are you sure you want to delete this comment?');\">";
     $responseString.= "</form></div>";
 
      } else//end If(3)
@@ -92,6 +92,55 @@ if(isset($_POST['submitComment'])) {
     
     }
 }
+
+//--Reply Section
+
+if(isset($_POST['replyComment'])) {
+    unset($_POST['replyComment']);
+
+    $errors = validateComments($_POST);
+
+    $redirectPostValue = $_POST['comment_post_id'];
+
+    if (count($errors) === 0) {
+
+    //logProg($_POST);
+    $newComment_id = create('comment_table', $_POST);
+    //logProg($newComment_id);
+    $latestComment = getLatestComment($redirectPostValue);
+    $HumanDate = date('F, j, Y', strtotime($latestComment[0]['date']));
+
+    $responseString = "<div class='displayReplyBox'>
+    <input hidden value='".$latestComment[0]['comment_parent_id']."'>
+    <input hidden type='text' name='comment_id' value='comment_id:".$latestComment[0]['comment_parent_id']."'>
+    <input style='display:none;' type='text' name='comment_post_id' value='comment_post_id: ".$latestComment[0]['comment_post_id']."' style='color:lightgrey;'>
+    <input style='display:none;' type='text' name='commenter_id_aka_user_id' value='".$latestComment[0]['commenter_id_aka_user_id']."'>
+    <img class='avatarHolderSinglePage' width='30px' height='30px' src='./assets/images/avatars/".$latestComment[0]['avatar_image']."' alt='".$latestComment[0]['avatar_image']."'>
+    <p class='commentBoxInfoBar' type='text' name='comment_content' >
+        <span><strong>".$latestComment[0]['username']."</strong></span>".$HumanDate.":
+    </p>
+    <p>".$latestComment[0]['comment_content']."</p>";
+
+        //Start Reply Delete Form--->
+        if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id']) {
+    $responseString.= "<br>
+            <div class='userBtnBar'>
+               <form  id='editForm".$latestComment[0]['comment_id']."' method='POST' action='displaysinglepage.php'>
+                    <input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>
+                    <input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>
+                    <input type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='Delete' onclick=\"return confirm('Are you sure you want to delete this reply?');\">
+                </form>
+            </div>";
+        } 
+        //End Reply Edit Form-->
+    $responseString.= "</div>";
+
+    //TODO Build dynamic replyDisplayBox from here to send back to the ajax
+    exit($responseString);
+    } else {
+    //logProg($errors);
+    }
+ }
 
 //--Delete--comment
 
@@ -119,6 +168,7 @@ if(isset($_GET['editing_id'])) {
     //logProg($editing_info);
     $editing_text = $editing_info['comment_content'];
     $update = true;
+    $reply = "now on editing page after page load after href ahhhhhhhhhh ooo ii ccc";
 }
 
 //--Update--comment
@@ -139,32 +189,5 @@ if(isset($_POST['update-comment'])) {
 
 }
 
-if(isset($_POST['replyComment'])) {
-    unset($_POST['replyComment']);
 
-    $errors = validateComments($_POST);
-
-    $redirectPostValue = $_POST['comment_post_id'];
-
-    if (count($errors) === 0) {
-
-    //logProg($_POST);
-    //logProg('current redirect value: ' .$redirectPostValue);
-    $newComment_id = create('comment_table', $_POST);
-    //logProg($newComment_id);
-    $latestComment = getLatestComment($redirectPostValue);
-
-    //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
-
-
-    //TODO Build dynamic replyDisplayBox from here to send back to the ajax
-    exit($latestComment[0]['comment_content']);
-    } else {
-    //logProg($errors);
-    
-    //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply&emptycomment=true");
-    
-    }
-
- }
 

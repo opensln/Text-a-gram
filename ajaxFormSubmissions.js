@@ -32,7 +32,7 @@ $(document).ready(function () {
         },
         success: function (response) {
           console.log(response);
-          $(commentBox_id).after("<div class='displayReplyBox'>" + response + "</div>");
+          $(commentBox_id).after(response);
           $("#replyFormContainer_id").remove();
           //TODO - Create the shape of the comment Box
           var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future

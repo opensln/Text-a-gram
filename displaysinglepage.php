@@ -81,7 +81,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
         <?php endif;?>
 
 <?php endif;?> <!--Options for user who is not logged in-->
-<?php echo $reply ?>
+
 <div id="commentListDiv">
     <?php foreach ($relatedComments as $item): ?>
         <?php if ($item['comment_parent_id'] <= 0): ?><!--main if statement-->
@@ -149,7 +149,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                 </p>
                 <p> <?php echo $reply['comment_content'] ?></p>
 
-                    <!--Start Reply Edit Form--->
+                    <!--Start Reply Delete Form--->
                     <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $reply['commenter_id_aka_user_id']): ?>
                         <br>
                         <div class="userBtnBar">
