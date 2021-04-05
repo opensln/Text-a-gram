@@ -1,59 +1,14 @@
 //listening for buttons that pass in the value of clicked button using event.target.value
 
-$("body").on("click", ".replyBtn", function (event) {
-  console.log(event.target.value + "----from .replyBtn event target");
-
-  var replyBtnId = event.target.value;
-
-  var reply_comment_content_id = "#reply_comment_content_id"+replyBtnId;
-  $(reply_comment_content_id).val(''); //Clear the reply textarea
-
-  var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
-  $(replyFormContainer_id).css("display", "block");
-
-  var userBtnBarTag = "#userBtnBar" + replyBtnId;
-  $(userBtnBarTag).css("display", "none");
-
-});
-
-$("body").on("click", ".cancelReplyBtn", function (event) {
-  event.preventDefault();
-  console.log(event.target.value + "----from .cancelReplyBtn event target");
-
-  var replyBtnId = event.target.value;
-
-  var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
-  
-  $(replyFormContainer_id).css("display", "none");
-
-  var userBtnBarTag = "#userBtnBar" + replyBtnId;
-  $(userBtnBarTag).css("display", "block");
-});
-
-$("body").on("click", ".cancelDynamicReplyBtn", function (event) {
-  event.preventDefault();
-
-  var replyBtnId = event.target.value;
-  
-  var replyBtnTag = "#replyBtn" + replyBtnId;
-  $(replyBtnTag).removeAttr("disabled");
-
-  var replyFormContainerTag = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
-  $(replyFormContainerTag).remove();
-
-  var userBtnBarTag = "#userBtnBar" + replyBtnId;
-  $(userBtnBarTag).css("display", "block");
-
- 
-});
-
-//--data- attr are used to get id information from the dynamically created elements which otherwise would not be accesible
+//-----------------------------------------------------Show Dynamic Reply Form
 $("body").on("click", ".dynamicReplyBtn", function (event) {
-
-    var currentParentId = event.target.value;
-    var comment_post_id = event.target.getAttribute("data-comment_post_id");
-
+    event.preventDefault();  
     var replyBtnId = event.target.value;
+
+    var currentParentId = event.target.value; //For readabilty
+    var comment_post_id = $("#comment_post_id" + replyBtnId).val();
+    //var comment_post_id = event.target.getAttribute("data-comment_post_id"); //alternative to jQury Tag
+   
     var userBtnBarTag = "#userBtnBar" + replyBtnId;
     $(userBtnBarTag).css("display", "none");
 
@@ -91,7 +46,25 @@ function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj) {
     });
 }
 
-//--Delete Comment
+//----------------------------------------------Cancel Dynmaic Reply Form
+$("body").on("click", ".cancelDynamicReplyBtn", function (event) {
+  event.preventDefault();
+
+  var replyBtnId = event.target.value;
+  
+  var replyBtnTag = "#replyBtn" + replyBtnId;
+  $(replyBtnTag).removeAttr("disabled");
+
+  var replyFormContainerTag = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
+  $(replyFormContainerTag).remove();
+
+  var userBtnBarTag = "#userBtnBar" + replyBtnId;
+  $(userBtnBarTag).css("display", "block");
+
+ 
+});
+
+//--------------------------------------------------------Delete Comment Ajax
 $("body").on("click", ".delBtn",function (event) {
   event.preventDefault();
 
@@ -123,7 +96,7 @@ $("body").on("click", ".delBtn",function (event) {
 } //--End if (result)
 });
 
-//--Show Update Comment TextArea
+//--------------------------------------------------------------------Show Update Comment TextArea
 $("body").on("click", ".editBtn", function (event) {
   event.preventDefault();
   //console.log("edit button " + event.target.value);
@@ -145,11 +118,3 @@ $("body").on("click", ".editBtn", function (event) {
   $(replyBtnTag).css("display", "none");
 
 });
-
-function cancelReplyForm(replyForm) {
-
-    var replyFormContainer_id = "#replyFormContainer_id"+replyForm.value; //--remember the # in future
-
-    $(replyFormContainer_id).css("display", "none");
-
-}

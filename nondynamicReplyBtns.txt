@@ -1,0 +1,40 @@
+//--Old cancel non dynamic reply btn
+// function cancelReplyForm(replyForm) {
+
+//     var replyFormContainer_id = "#replyFormContainer_id"+replyForm.value; //--remember the # in future
+
+//     $(replyFormContainer_id).css("display", "none");
+
+// }
+
+//--Old non dynamic reply btn
+// $("body").on("click", ".replyBtn", function (event) {
+//   console.log(event.target.value + "----from .replyBtn event target");
+
+//   var replyBtnId = event.target.value;
+
+//   var reply_comment_content_id = "#reply_comment_content_id"+replyBtnId;
+//   $(reply_comment_content_id).val(''); //Clear the reply textarea
+
+//   var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
+//   $(replyFormContainer_id).css("display", "block");
+
+//   var userBtnBarTag = "#userBtnBar" + replyBtnId;
+//   $(userBtnBarTag).css("display", "none");
+
+// });
+
+//--Old cancel non dynamic reply button
+// $("body").on("click", ".cancelReplyBtn", function (event) {
+//   event.preventDefault();
+//   console.log(event.target.value + "----from .cancelReplyBtn event target");
+
+//   var replyBtnId = event.target.value;
+
+//   var replyFormContainer_id = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
+  
+//   $(replyFormContainer_id).css("display", "none");
+
+//   var userBtnBarTag = "#userBtnBar" + replyBtnId;
+//   $(userBtnBarTag).css("display", "block");
+// });

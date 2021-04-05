@@ -2,35 +2,15 @@
 
 // include './app/database/dbRequests.php';
 $errors = array();
-//Create--Comments
+
+
 $editing_id = '';
 $editing_text = '';
 $update = false;
 
-//--Show Reply Form 
-if(isset($_POST['showReplyForm'])) {
- 
-    //logProg($_POST);
 
-    $responseString = "<div id='replyFormContainer_id".$_POST['comment_parent_id']."' class='dynamicReplyFormContainer'>";
-    $responseString.= "<form method='POST' onsubmit='return submitComment()'>";
-    $responseString.= "<input id='reply_user_id".$_POST['comment_parent_id']."' hidden type='text' name='commenter_id_aka_user_id' value='".$_SESSION['user_id']."'>";
-    $responseString.= "<input id='reply_post_id".$_POST['comment_parent_id']."' hidden type='text' name='comment_post_id' value='".$_POST['comment_post_id']."'>";
-    $responseString.= "<textarea id='reply_comment_content_id".$_POST['comment_parent_id']."' name='comment_content' placeholder='type your reply here...'></textarea>";
-    $responseString.= "<button  id='submitReplyBtn'
-                                class='submitReplyBtn btn btn-success'
-                                type=''
-                                name='reply-comment'
-                                value='".$_POST['comment_parent_id']."'
-                                >Submit Reply</button>";
-    $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
-    $responseString.= "</form></div>";
 
-  
-    exit($responseString);
-}
-
-//--Submit--comment
+//------------------------------------------------Submit & Prepare Comment
 
 if(isset($_POST['submitComment'])) {
    unset($_POST['submitComment']);
@@ -106,10 +86,34 @@ if(isset($_POST['submitComment'])) {
     }
 }
 
-//--Reply Section
 
-if(isset($_POST['replyComment'])) {
-    unset($_POST['replyComment']);
+//--------------------------------------------------Show Dynmic Reply Form
+if(isset($_POST['showReplyForm'])) {
+ 
+    //logProg($_POST);
+
+    $responseString = "<div id='replyFormContainer_id".$_POST['comment_parent_id']."' class='dynamicReplyFormContainer'>";
+    $responseString.= "<form method='POST' onsubmit='return submitComment()'>";
+    $responseString.= "<input id='reply_user_id".$_POST['comment_parent_id']."' hidden type='text' name='commenter_id_aka_user_id' value='".$_SESSION['user_id']."'>";
+    $responseString.= "<input id='reply_post_id".$_POST['comment_parent_id']."' hidden type='text' name='comment_post_id' value='".$_POST['comment_post_id']."'>";
+    $responseString.= "<textarea id='reply_comment_content_id".$_POST['comment_parent_id']."' name='comment_content' placeholder='type your reply here...'></textarea>";
+    $responseString.= "<button  id='submitReplyBtn'
+                                class='submitReplyBtn btn btn-success'
+                                type=''
+                                name='reply-comment'
+                                value='".$_POST['comment_parent_id']."'
+                                >Submit Reply</button>";
+    $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
+    $responseString.= "</form></div>";
+
+  
+    exit($responseString);
+}
+
+//--------------------------------------------------------Submit & Prepare Reply
+
+if(isset($_POST['submitReply'])) {
+    unset($_POST['submitReply']);
 
     $errors = validateComments($_POST);
 
@@ -152,7 +156,7 @@ if(isset($_POST['replyComment'])) {
     }
  }
 
-//--Delete--comment
+//----------------------------------------------------------Delete--comment
 
 if(isset($_POST['deleteComment'])) {
     //logProg($_POST);
@@ -169,18 +173,9 @@ if(isset($_POST['deleteComment'])) {
     header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
 }
 
-//--Fetch--comment--for updating
 
-if(isset($_GET['editing_id'])) {
-    $editing_id = $_GET['editing_id'];
 
-    $editing_info = selectOne('comment_table', ['comment_id' => $_GET['editing_id']]);
-    //logProg($editing_info);
-    $editing_text = $editing_info['comment_content'];
-    $update = true;
-}
-
-//--Update--comment
+//--------------------------------------------------------Update--comment
 
 if(isset($_POST['updateComment'])) {
     unset($_POST['updateComment']);
@@ -200,5 +195,13 @@ if(isset($_POST['updateComment'])) {
 
 }
 
+// //--Fetch--comment--for updating (PHP)
 
+// if(isset($_GET['editing_id'])) {
+//     $editing_id = $_GET['editing_id'];
 
+//     $editing_info = selectOne('comment_table', ['comment_id' => $_GET['editing_id']]);
+//     //logProg($editing_info);
+//     $editing_text = $editing_info['comment_content'];
+//     $update = true;
+// }

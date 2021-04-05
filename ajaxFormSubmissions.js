@@ -4,7 +4,7 @@ function submitComment() {
 
 $(document).ready(function () {
 
-  //Submit-Reply
+  //----------------------------------------------------------Submit-Reply
   $("body").on("click", ".submitReplyBtn", function (event) {
     event.preventDefault();
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
         url: "displaysinglepage.php",
         dataType: "text",
         data: {
-          replyComment: 1,
+          submitReply: 1,
           comment_parent_id: comment_parent_id, //Which comment is it attached to?
           comment_post_id: comment_post_id, //Which post is it attached to?
           commenter_id_aka_user_id: commenter_id_aka_user_id, //Who is writing the comment?
@@ -57,7 +57,7 @@ $(document).ready(function () {
     
   });
 
-  //Submit-Comment
+  //-----------------------------------------------------------Submit-Comment
   $("body").on("click", "#commentSubmitBtn", function (event) {
     event.preventDefault();
 
@@ -92,7 +92,7 @@ $(document).ready(function () {
   });
 });
 
-//--Submit Update
+//-----------------------------------------------------------------Submit Update Comment
 $("body").on("click", ".commentUpdateBtn", function (event) {
   event.preventDefault();
 

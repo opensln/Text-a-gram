@@ -112,7 +112,6 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                             value='<?php echo $item['comment_id'] ?>'
                             class='btn dynamicReplyBtn'
                             name='replyBtn<?php echo $item['comment_id'] ?>'
-                            data-comment_post_id='<?php echo $item['comment_post_id'] ?>'
                             >Reply</button>
                 <?php endif;?>
 
