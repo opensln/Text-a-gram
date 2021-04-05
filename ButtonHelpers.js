@@ -114,3 +114,24 @@ $("body").on("click", ".editBtn", function (event) {
   $(editFormTag).css("display", "none");
   $(replyBtnTag).css("display", "none");
 });
+
+//----------------------------------------------Cancel Dynmaic Reply Form
+$("body").on("click", ".cancelUpdateBtn", function (event) {
+  event.preventDefault();
+  var editBtnId = event.target.value;
+
+  var old_comment_contentTag = "#comment_content" + editBtnId;
+  var editTextareaHolderTag = "#editTextareaHolder" + editBtnId;
+  var editFormTag = "#editForm" + editBtnId;
+  var replyBtnTag = "#replyBtn" + editBtnId;
+
+  // console.log("old_comment_contentTag " + old_comment_contentTag);
+  // console.log("editTextareaBoxTag " + editTextareaHolderTag);
+  // console.log("editFormTag " + editFormTag);
+  // console.log("replyBtnTag " + replyBtnTag);
+
+  $(editTextareaHolderTag).css("display", "none");
+  $(old_comment_contentTag).css("display", "block");
+  $(editFormTag).css("display", "block");
+  $(replyBtnTag).css("display", "block");
+});

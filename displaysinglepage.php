@@ -87,7 +87,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                     class='commentUpdateBtn btn btn-success'
                     value='<?php echo $item['comment_id'] ?>'
                     >Update it</button>
-                    <a class='cancelUpdateBtn btn btn-danger float-right'>Cancel Update</a>
+                    <button class='cancelUpdateBtn btn btn-danger float-right' value='<?php echo $item['comment_id'] ?>'>Cancel Update</button>
                 </div>
 
                 <?php if (isset($_SESSION['user_id'])): ?>

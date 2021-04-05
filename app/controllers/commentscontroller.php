@@ -178,7 +178,7 @@ if(isset($_POST['deleteComment'])) {
 
 if(isset($_POST['updateComment'])) {
     unset($_POST['updateComment']);
-    logProg($_POST);
+    //logProg($_POST);
     $redirectPostValue = $_POST['comment_post_id'];
     //logProg($redirectPostValue);
 
