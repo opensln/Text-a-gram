@@ -126,7 +126,7 @@ $("body").on("click", ".delBtn",function (event) {
 //--Show Update Comment TextArea
 $("body").on("click", ".editBtn", function (event) {
   event.preventDefault();
-  console.log("edit button " + event.target.value);
+  //console.log("edit button " + event.target.value);
   var editBtnId = event.target.value;
 
   var old_comment_contentTag = "#comment_content" + editBtnId;
@@ -134,10 +134,10 @@ $("body").on("click", ".editBtn", function (event) {
   var editFormTag = "#editForm" + editBtnId;
   var replyBtnTag = "#replyBtn" + editBtnId;
 
-  console.log("old_comment_contentTag " + old_comment_contentTag);
-  console.log("editTextareaBoxTag " + editTextareaHolderTag);
-  console.log("editFormTag " + editFormTag);
-  console.log("replyBtnTag " + replyBtnTag);
+  // console.log("old_comment_contentTag " + old_comment_contentTag);
+  // console.log("editTextareaBoxTag " + editTextareaHolderTag);
+  // console.log("editFormTag " + editFormTag);
+  // console.log("replyBtnTag " + replyBtnTag);
 
   $(editTextareaHolderTag).css("display", "block");
   $(old_comment_contentTag).css("display", "none");

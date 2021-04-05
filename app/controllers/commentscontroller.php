@@ -193,8 +193,9 @@ if(isset($_POST['updateComment'])) {
     //logProg($_POST);
     $updatedEntry_id = update('comment_table', $stored_id_from_page, $_POST);
     //logProg($updatedEntry_id);
-
-    exit("number of affected rows ".$updatedEntry_id);
+    $editedComment = selectOne('comment_table', ['comment_id' => $stored_id_from_page]);
+    //logProg($editedComment);
+    exit($editedComment['comment_content']);
     //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
 
 }

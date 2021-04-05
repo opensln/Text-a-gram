@@ -99,11 +99,11 @@ $("body").on("click", ".commentUpdateBtn", function (event) {
 var editBtnId = event.target.value;
 
 var textareaEditBoxVal = $("#textareaEditBox" + editBtnId).val();
-   textareaEditBoxVal += "...(edited)";
+    textareaEditBoxVal += "...(edited)";
 var comment_post_idVal = $("#comment_post_id" + editBtnId).val();
 
-console.log("textareaEditBox " + textareaEditBoxVal);
-console.log("comment_post_idVal " + comment_post_idVal);
+//console.log("textareaEditBox " + textareaEditBoxVal);
+//console.log("comment_post_idVal " + comment_post_idVal);
 
 $.ajax({
   method: "POST",
@@ -117,7 +117,20 @@ $.ajax({
   },
   success: function (response) {
       //console.log(response);
-      location.reload();
+      //location.reload();
+
+      var editTextareaHolderTag = "#editTextareaHolder" + editBtnId;
+      $(editTextareaHolderTag).css("display", "none");
+
+      var old_comment_contentTag = "#comment_content" + editBtnId;
+      $(old_comment_contentTag).html(response);
+      $(old_comment_contentTag).css("display", "block");
+
+      var replyBtnTag = "#replyBtn" + editBtnId;
+      $(replyBtnTag).css("display", "block");
+    
+      var editFormTag = "#editForm" + editBtnId;
+      $(editFormTag).css("display", "block");
   },
 });
 
