@@ -41,7 +41,6 @@ function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj) {
         
           $(commentBoxTag).append(response);
           $(replyBtnTag).prop("disabled", "true");
-
       },
     });
 }
@@ -60,8 +59,6 @@ $("body").on("click", ".cancelDynamicReplyBtn", function (event) {
 
   var userBtnBarTag = "#userBtnBar" + replyBtnId;
   $(userBtnBarTag).css("display", "block");
-
- 
 });
 
 //--------------------------------------------------------Delete Comment Ajax
@@ -88,9 +85,9 @@ $("body").on("click", ".delBtn",function (event) {
     },
     success: function (response) {
         //console.log(response);
-
-        $(displayReplyBoxTag).remove(); //If this exists then the commentBox with the same Id will note exist due to the auto increment of the comment ids.
-        $(commentBoxTag).remove();
+        location.reload();
+        // $(displayReplyBoxTag).remove(); //If this exists then the commentBox with the same Id will note exist due to the auto increment of the comment ids.
+        // $(commentBoxTag).remove();
     },
   });
 } //--End if (result)
@@ -116,5 +113,4 @@ $("body").on("click", ".editBtn", function (event) {
   $(old_comment_contentTag).css("display", "none");
   $(editFormTag).css("display", "none");
   $(replyBtnTag).css("display", "none");
-
 });

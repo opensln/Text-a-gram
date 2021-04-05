@@ -35,8 +35,8 @@ if(isset($_POST['submitComment'])) {
     //exit($latestComment[0]['comment_content']);
     $responseString = "<div class='displayCommentBox' id='commentBox_id".$latestComment[0]['comment_id']."'>";
     $responseString .="<input hidden type='text' name='comment_id' value='comment_id:".$latestComment[0]['comment_id']."'>";
-    $responseString .="<input style='display:none;' type='text' name='comment_post_id' value='comment_post_id:".$latestComment[0]['comment_post_id']."' style='color:lightgrey;'>";
-    $responseString .="<input style='display:none;' type='text' name='commenter_id_aka_user_id' value=".$latestComment[0]['commenter_id_aka_user_id'].">";
+    $responseString .="<input hidden id='comment_post_id".$latestComment[0]['comment_id']."' type='text' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."' >";
+    $responseString .="<input hidden id='commenter_id_aka_user_id' value".$latestComment[0]['comment_id']."' type='text' name='commenter_id_aka_user_id' value=".$latestComment[0]['commenter_id_aka_user_id'].">";
     $responseString .="<img class='avatarHolderSinglePage' width='30px' height='30px' src='./assets/images/avatars/".$latestComment[0]['avatar_image']."' alt='".$latestComment[0]['avatar_image']."'>";
     $responseString .="<p class='commentBoxInfoBar' type='text' name='comment_content'>";
     $responseString .="<span><strong>".$latestComment[0]['username']."</strong></span>"." ".$HumanDate.":";
@@ -87,7 +87,7 @@ if(isset($_POST['submitComment'])) {
 }
 
 
-//--------------------------------------------------Show Dynmic Reply Form
+//--------------------------------------------------Show Dynamic Reply Form
 if(isset($_POST['showReplyForm'])) {
  
     //logProg($_POST);

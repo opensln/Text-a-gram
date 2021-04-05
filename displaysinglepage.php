@@ -34,7 +34,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
         <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $requestedInfo['poster_id_aka_user_id']): ?>
             <form method="POST" action="displaysinglepage.php" class="userBtnBar">
                 <input type="hidden" name="post_id" value="<?php echo $requestedInfo['post_id'] ?>">
-                <input type="submit" name="delete-post" value="Delete" class="btn btn-dangerx delBtn" onclick="return confirm('Are you sure you want to delete this comment? This discussion will be gone forever!!');">
+                <input type="submit" name="delete-post" value="Delete" class="btn btn-dangerx delPostBtn" onclick="return confirm('Are you sure you want to delete this comment? This discussion will be gone forever!!');">
             </form>
         <?php endif;?>
 
@@ -87,8 +87,8 @@ $relatedComments = getRelatedComments($_GET['post_id']);
         <?php if ($item['comment_parent_id'] <= 0): ?><!--main if statement-->
             <div class="displayCommentBox" id="commentBox_id<?php echo $item['comment_id'] ?>">
                 <input hidden type="text" name='comment_id' value='comment_id: <?php echo $item['comment_id'] ?>'>
-                <input id='comment_post_id<?php echo $item['comment_id'] ?>'  style='display:none;' type="text" name='comment_post_id' value='<?php echo $item['comment_post_id'] ?>' style="color:lightgrey;">
-                <input id='commenter_id_aka_user_id<?php echo $item['comment_id'] ?>'  style='display:none;' type='text' name='commenter_id_aka_user_id' value=<?php echo $item['commenter_id_aka_user_id'] ?>>
+                <input hidden id='comment_post_id<?php echo $item['comment_id'] ?>' type="text" name='comment_post_id' value='<?php echo $item['comment_post_id'] ?>' style="color:lightgrey;">
+                <input hidden id='commenter_id_aka_user_id<?php echo $item['comment_id'] ?>' type='text' name='commenter_id_aka_user_id' value=<?php echo $item['commenter_id_aka_user_id'] ?>>
                 <img class="avatarHolderSinglePage" width="30px" height="30px" src='./assets/images/avatars/<?php echo $item['avatar_image'] ?>' alt="<?php echo $item['avatar_image'] ?>">
                 <p class="commentBoxInfoBar" type='text' name='comment_content' >
                     <span><strong><?php echo $item['username'] ?></strong></span> <?php echo date('F, j, Y', strtotime($item['date'])) ?>:
