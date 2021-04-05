@@ -20,10 +20,10 @@ $(document).ready(function () {
     var commentBox_id = "#commentBox_id" + (replyBtnId);
     console.log(commentBox_id);
 
-console.log("comment_parent_id" + comment_parent_id);
-console.log(comment_post_id);
-console.log(commenter_id_aka_user_id);
-console.log(reply_comment_content_id);
+// console.log("comment_parent_id" + comment_parent_id);
+// console.log(comment_post_id);
+// console.log(commenter_id_aka_user_id);
+// console.log(reply_comment_content_id);
 
     if (reply_comment_content_id != "") {
       $.ajax({
@@ -44,7 +44,10 @@ console.log(reply_comment_content_id);
           var replyFormContainerTag = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
           $(replyFormContainerTag).remove();
           var replyBtnTag = "#replyBtn" + replyBtnId;
-          $(replyBtnTag).removeAttr("disabled");
+          $(replyBtnTag).removeAttr("disabled"); //Re-enable the reply button
+
+          var userBtnBarTag = "#userBtnBar" + replyBtnId; //Bring back the edit and delete buttons
+          $(userBtnBarTag).css("display", "block");
 
         },
       });
@@ -59,7 +62,7 @@ console.log(reply_comment_content_id);
     event.preventDefault();
 
     //alert("trigger detection");
-
+  
     var comment_content = $("#comment_content").val();
     var commenter_id_aka_user_id = $("#commenter_id_aka_user_id").val();
     var comment_post_id = $("#comment_post_id").val();
@@ -79,6 +82,8 @@ console.log(reply_comment_content_id);
         success: function (response) {
           $("#commentListDiv").prepend(response);
           //TODO - Create the shape of the comment Box
+          var commentTextareaTAG = "#comment_content";
+          $(commentTextareaTAG).val('');
         },
       });
     } else {
@@ -87,3 +92,33 @@ console.log(reply_comment_content_id);
   });
 });
 
+//--Submit Update
+$("body").on("click", ".commentUpdateBtn", function (event) {
+  event.preventDefault();
+
+var editBtnId = event.target.value;
+
+var textareaEditBoxVal = $("#textareaEditBox" + editBtnId).val();
+   textareaEditBoxVal += "...(edited)";
+var comment_post_idVal = $("#comment_post_id" + editBtnId).val();
+
+console.log("textareaEditBox " + textareaEditBoxVal);
+console.log("comment_post_idVal " + comment_post_idVal);
+
+$.ajax({
+  method: "POST",
+  url: "displaysinglepage.php",
+  dataType: "text",
+  data: {
+      updateComment: 1,
+      comment_id : editBtnId,
+      comment_content: textareaEditBoxVal,
+      comment_post_id: comment_post_idVal,
+  },
+  success: function (response) {
+      //console.log(response);
+      location.reload();
+  },
+});
+
+});

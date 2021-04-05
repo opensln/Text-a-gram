@@ -133,3 +133,18 @@
                     <?php endif;?>
                     <!--End Reply Edit Form-->
             </div> <!--End-Display Reply Box-->
+
+                      <!-- <textarea style='width:100%'> <?php echo $item['comment_content'] ?><textarea> -->
+
+                       <!-- <span id='editedFlag<?php echo $item['comment_id'] ?>' class='edited'><i>...edited</i></span>-->
+
+                <div id='editTextareaHolder<?php echo $item['comment_id'] ?>' class='editTextareaHolder'>
+                <textarea id='textareaEditBox<?php echo $item['comment_id'] ?>' style='width:100%;'> <?php echo $item['comment_content'] ?></textarea>
+                <button id=''
+                class='commentUpdateBtn btn btn-success'
+                value='<?php echo $item['comment_id'] ?>'
+                >Update it</button>
+                <a class='cancelUpdateBtn btn btn-danger float-right'>Cancel Update</a>
+                </div>
+
+                onclick="return confirm('Are you sure you want to delete this comment?');"

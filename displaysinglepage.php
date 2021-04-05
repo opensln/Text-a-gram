@@ -93,7 +93,18 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                 <p class="commentBoxInfoBar" type='text' name='comment_content' >
                     <span><strong><?php echo $item['username'] ?></strong></span> <?php echo date('F, j, Y', strtotime($item['date'])) ?>:
                 </p>
-                <p> <?php echo $item['comment_content'] ?></p>
+                <p id='comment_content<?php echo $item['comment_id'] ?>'> <?php echo $item['comment_content'] ?>
+                </p>
+
+                <div id='editTextareaHolder<?php echo $item['comment_id'] ?>' class='editTextareaHolder'>
+                <textarea id='textareaEditBox<?php echo $item['comment_id'] ?>' style='width:100%;'> <?php echo $item['comment_content'] ?></textarea>
+                <button id=''
+                class='commentUpdateBtn btn btn-success'
+                value='<?php echo $item['comment_id'] ?>'
+                >Update it</button>
+                <a class='cancelUpdateBtn btn btn-danger float-right'>Cancel Update</a>
+                </div>
+      
 
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <button id='replyBtn<?php echo $item['comment_id'] ?>'
@@ -109,15 +120,15 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                         <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $item['commenter_id_aka_user_id']): ?>
                             <div id='userBtnBar<?php echo $item['comment_id'] ?>' class="userBtnBar">
                                 <form  id='editForm<?php echo $item['comment_id'] ?>' class='.editForm' method='POST' onsubmit='return submitComment();' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>
-                                    <a class="btn btn-successx editBtn" href="./displaysinglepage.php?post_id=<?php echo $_GET['post_id'] ?>&parentId&editing_id=<?php echo $item['comment_id'] ?>&reply" >Edit</a>
+                                    <button class="btn btn-successx editBtn" value='<?php echo $item['comment_id'] ?>'>Edit</button>
                                     <input type='hidden' name='comment_post_id' value='<?php echo $requestedInfo['post_id'] ?>'>
                                     <input type="hidden" name="comment_id" value="<?php echo $item['comment_id'] ?>">
-                                    <button type="submit" name="delete-comment" class="btn btn-dangerx delBtn" value="<?php echo $item['comment_id'] ?>" onclick="return confirm('Are you sure you want to delete this comment?');">Delete</button>
+                                    <button type="" name="delete-comment" class="btn btn-dangerx delBtn" value="<?php echo $item['comment_id'] ?>" >Delete</button>
                                 </form>
                             </div>
                         <?php endif;?>
 
-</div>
+    </div>
 
     <!--Start Reply loop-->
     <?php foreach ($relatedComments as $reply): ?>
@@ -152,7 +163,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
 
 <?php endif;?><!--end main if statement-->
     <?php endforeach;?>
-</div> End test2Div
+</div>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
@@ -165,7 +176,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
     </script>
 
     <script type="text/javascript" src="./ajaxFormSubmissions.js" ></script>
-    <script type="text/javascript" src="./helpers.js" ></script>
+    <script type="text/javascript" src="./ButtonHelpers.js" ></script>
 
 </body>
 </html>

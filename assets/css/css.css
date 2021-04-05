@@ -170,12 +170,21 @@ margin-top: 5px;;
   
 }
 
+.displayCommentBox .editTextareaHolder {
+    display: none;
+}
+
+.edited {
+    display: none;
+}
+
 .replyFormContainer {
  display:none;
 }
 
 .replyFormContainer textarea,
-.dynamicReplyFormContainer textarea {
+.dynamicReplyFormContainer textarea,
+.displayCommentBox textarea {
     width:100%;
     margin: 0 0 -6px 0;
     background-color: rgb(210,210,210);

@@ -61,6 +61,16 @@ if(isset($_POST['submitComment'])) {
     $responseString .="<p class='commentBoxInfoBar' type='text' name='comment_content'>";
     $responseString .="<span><strong>".$latestComment[0]['username']."</strong></span>"." ".$HumanDate.":";
     $responseString.= "<p>".$latestComment[0]['comment_content']."</p>";
+
+    $responseString.= "<div id='editTextareaHolder".$latestComment[0]['comment_id']."' class='editTextareaHolder'>
+    <textarea id='textareaEditBox".$latestComment[0]['comment_id']."' style='width:100%;'> ".$latestComment[0]['comment_content']." </textarea>
+    <button id=''
+    class='commentUpdateBtn btn btn-success'
+    value='".$latestComment[0]['comment_id']."'
+    >Update it</button>
+    <a class='cancelUpdateBtn btn btn-danger float-right'>Cancel Update</a>
+    </div>";
+
     $responseString.= "<button
                         id='replyBtn".$latestComment[0]['comment_id']."'
                         type='button' 
@@ -74,13 +84,13 @@ if(isset($_POST['submitComment'])) {
 
     //If the user is logged in "NOT REPLYING" and it is their own comment then show the edit and delete buttons-->
     if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id']) { //If(3)-->
-    $responseString.= "<div id='userBtnBar".$latestComment[0]['comment_id']."' class='userBtnBar'>";
-    $responseString.= "<form  id='editForm".$latestComment[0]['comment_id']."' class='.editForm' method='POST' action='displaysinglepage.php' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>";
-    $responseString.= "<a class='btn btn-successx editBtn' href='./displaysinglepage.php?post_id=".$redirectPostValue."&parentId&editing_id=".$latestComment[0]['comment_id']."&reply' >Edit</a>";
-    $responseString.= "<input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>";
-    $responseString.= "<input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>";
-    $responseString.= "<button type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='".$latestComment[0]['comment_id']."' onclick=\"return confirm('Are you sure you want to delete this comment?');\">Delete</button>";
-    $responseString.= "</form></div>";
+    $responseString.= "<div id='userBtnBar".$latestComment[0]['comment_id']."' class='userBtnBar'>
+    <form  id='editForm".$latestComment[0]['comment_id']."' class='.editForm' method='POST' onsubmit='return submitComment();' style='width:70%; position:absolute; bottom: 5px;right: 5px;'>
+        <button class='btn btn-successx editBtn' value='".$latestComment[0]['comment_id']."' >Edit</button>
+        <input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>
+        <input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>
+        <button type='' name='delete-comment' class='btn btn-dangerx delBtn' value='".$latestComment[0]['comment_id']."'>Delete</button>
+    </form></div>";
 
      } else//end If(3)
      $responseString.= "</div>";
@@ -128,7 +138,7 @@ if(isset($_POST['replyComment'])) {
                <form  id='editForm".$latestComment[0]['comment_id']."' method='POST' action='displaysinglepage.php' >
                     <input type='hidden' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>
                     <input type='hidden' name='comment_id' value='".$latestComment[0]['comment_id']."'>
-                    <button type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='".$latestComment[0]['comment_id']."' onclick=\"return confirm('Are you sure you want to delete this reply?');\">Delete</button>
+                    <button type='submit' name='delete-comment' class='btn btn-dangerx delBtn' value='".$latestComment[0]['comment_id']."'>Delete</button>
                 </form>
             </div>";
         } 
@@ -168,24 +178,24 @@ if(isset($_GET['editing_id'])) {
     //logProg($editing_info);
     $editing_text = $editing_info['comment_content'];
     $update = true;
-    $reply = "now on editing page after page load after href ahhhhhhhhhh ooo ii ccc";
 }
 
 //--Update--comment
 
-if(isset($_POST['update-comment'])) {
-    unset($_POST['update-comment']);
+if(isset($_POST['updateComment'])) {
+    unset($_POST['updateComment']);
     //logProg($_POST);
     $redirectPostValue = $_POST['comment_post_id'];
     //logProg($redirectPostValue);
 
     $stored_id_from_page = ($_POST['comment_id']);
-    unset($_POST['comment_id']);
-  
+    unset($_POST['comment_id']); //The comment_id must be separate in the query and removed from the data bundle
+    //logProg($_POST);
     $updatedEntry_id = update('comment_table', $stored_id_from_page, $_POST);
     //logProg($updatedEntry_id);
 
-    header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
+    exit("number of affected rows ".$updatedEntry_id);
+    //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
 
 }
 

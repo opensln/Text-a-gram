@@ -92,12 +92,15 @@ function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj) {
 }
 
 //--Delete Comment
-$("body").on("click", ".delBtn", function (event) {
+$("body").on("click", ".delBtn",function (event) {
   event.preventDefault();
 
-  console.log("Value from delBtn " + event.target.value);
-var delBtnCommentId = event.target.value;
-  console.log("triggered from delBtn helper");
+  var result = confirm("Are you sure you want to delete this comment?")
+
+  if (result) {
+  //console.log("Value from delBtn " + event.target.value);
+  var delBtnCommentId = event.target.value;
+  //console.log("triggered from delBtn helper");
 
   var displayReplyBoxTag = "#displayReplyBox" + delBtnCommentId;
   var commentBoxTag = "#commentBox_id" + delBtnCommentId; 
@@ -111,12 +114,35 @@ var delBtnCommentId = event.target.value;
         comment_id :delBtnCommentId,
     },
     success: function (response) {
-        console.log(response);
+        //console.log(response);
 
         $(displayReplyBoxTag).remove(); //If this exists then the commentBox with the same Id will note exist due to the auto increment of the comment ids.
         $(commentBoxTag).remove();
     },
   });
+} //--End if (result)
+});
+
+//--Show Update Comment TextArea
+$("body").on("click", ".editBtn", function (event) {
+  event.preventDefault();
+  console.log("edit button " + event.target.value);
+  var editBtnId = event.target.value;
+
+  var old_comment_contentTag = "#comment_content" + editBtnId;
+  var editTextareaHolderTag = "#editTextareaHolder" + editBtnId;
+  var editFormTag = "#editForm" + editBtnId;
+  var replyBtnTag = "#replyBtn" + editBtnId;
+
+  console.log("old_comment_contentTag " + old_comment_contentTag);
+  console.log("editTextareaBoxTag " + editTextareaHolderTag);
+  console.log("editFormTag " + editFormTag);
+  console.log("replyBtnTag " + replyBtnTag);
+
+  $(editTextareaHolderTag).css("display", "block");
+  $(old_comment_contentTag).css("display", "none");
+  $(editFormTag).css("display", "none");
+  $(replyBtnTag).css("display", "none");
 
 });
 
