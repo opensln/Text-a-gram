@@ -22,8 +22,8 @@ function makeDynamicReplyFormVisible(currentParentIdObj, comment_post_idObj) {
   console.log("comment post id " + comment_post_idObj);
 
   var replyBtnTag = "#replyBtn" + currentParentIdObj;
-  var commentBoxTag = "#commentBox_id" + (currentParentIdObj); //--remember the # in future
-  var replyFormContainerTag = "#replyFormContainer_id" + (currentParentIdObj); //--remember the # in future
+  var commentBoxTag = "#commentBox_id" + currentParentIdObj; //--remember the # in future
+  var replyFormContainerTag = "#replyFormContainer_id" + currentParentIdObj; //--remember the # in future
   //alert(replyFormContainer_id +" jQuery form hash");
   $(replyFormContainerTag).css("display", "block");
 
@@ -86,7 +86,7 @@ $("body").on("click", ".delBtn",function (event) {
     success: function (response) {
         //console.log(response);
         location.reload();
-        // $(displayReplyBoxTag).remove(); //If this exists then the commentBox with the same Id will note exist due to the auto increment of the comment ids.
+        // $(displayReplyBoxTag).remove();
         // $(commentBoxTag).remove();
     },
   });
@@ -104,18 +104,13 @@ $("body").on("click", ".editBtn", function (event) {
   var editFormTag = "#editForm" + editBtnId;
   var replyBtnTag = "#replyBtn" + editBtnId;
 
-  // console.log("old_comment_contentTag " + old_comment_contentTag);
-  // console.log("editTextareaBoxTag " + editTextareaHolderTag);
-  // console.log("editFormTag " + editFormTag);
-  // console.log("replyBtnTag " + replyBtnTag);
-
   $(editTextareaHolderTag).css("display", "block");
   $(old_comment_contentTag).css("display", "none");
   $(editFormTag).css("display", "none");
   $(replyBtnTag).css("display", "none");
 });
 
-//----------------------------------------------Cancel Dynmaic Reply Form
+//----------------------------------------------Cancel Update Form
 $("body").on("click", ".cancelUpdateBtn", function (event) {
   event.preventDefault();
   var editBtnId = event.target.value;
@@ -124,11 +119,6 @@ $("body").on("click", ".cancelUpdateBtn", function (event) {
   var editTextareaHolderTag = "#editTextareaHolder" + editBtnId;
   var editFormTag = "#editForm" + editBtnId;
   var replyBtnTag = "#replyBtn" + editBtnId;
-
-  // console.log("old_comment_contentTag " + old_comment_contentTag);
-  // console.log("editTextareaBoxTag " + editTextareaHolderTag);
-  // console.log("editFormTag " + editFormTag);
-  // console.log("replyBtnTag " + replyBtnTag);
 
   $(editTextareaHolderTag).css("display", "none");
   $(old_comment_contentTag).css("display", "block");
