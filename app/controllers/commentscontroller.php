@@ -34,7 +34,6 @@ if(isset($_POST['submitComment'])) {
     //logProg($latestComment);
     //exit($latestComment[0]['comment_content']);
     $responseString = "<div class='displayCommentBox' id='commentBox_id".$latestComment[0]['comment_id']."'>";
-    $responseString .="<input hidden type='text' name='comment_id' value='comment_id:".$latestComment[0]['comment_id']."'>";
     $responseString .="<input hidden id='comment_post_id".$latestComment[0]['comment_id']."' type='text' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."' >";
     $responseString .="<input hidden id='commenter_id_aka_user_id' value".$latestComment[0]['comment_id']."' type='text' name='commenter_id_aka_user_id' value=".$latestComment[0]['commenter_id_aka_user_id'].">";
     $responseString .="<img class='avatarHolderSinglePage' width='30px' height='30px' src='./assets/images/avatars/".$latestComment[0]['avatar_image']."' alt='".$latestComment[0]['avatar_image']."'>";
@@ -179,7 +178,7 @@ if(isset($_POST['deleteComment'])) {
 
 if(isset($_POST['updateComment'])) {
     unset($_POST['updateComment']);
-    //logProg($_POST);
+    logProg($_POST);
     $redirectPostValue = $_POST['comment_post_id'];
     //logProg($redirectPostValue);
 
