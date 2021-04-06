@@ -30,16 +30,16 @@ if(isset($_POST['submitComment'])) {
     //logProg($newComment_id);
     $latestComment = getLatestComment($redirectPostValue);
 
-    $HumanDate = date('F, j, Y', strtotime($latestComment[0]['date']));
+    $humanDate = date('F, j, Y', strtotime($latestComment[0]['date']));
     //logProg($latestComment);
     //exit($latestComment[0]['comment_content']);
     $responseString = "<div class='displayCommentBox' id='commentBox_id".$latestComment[0]['comment_id']."'>";
     $responseString .="<input hidden id='comment_post_id".$latestComment[0]['comment_id']."' type='text' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."' >";
     $responseString .="<input hidden id='commenter_id_aka_user_id' value".$latestComment[0]['comment_id']."' type='text' name='commenter_id_aka_user_id' value=".$latestComment[0]['commenter_id_aka_user_id'].">";
     $responseString .="<img class='avatarHolderSinglePage' width='30px' height='30px' src='./assets/images/avatars/".$latestComment[0]['avatar_image']."' alt='".$latestComment[0]['avatar_image']."'>";
-    $responseString .="<p class='commentBoxInfoBar' type='text' name='comment_content'>";
-    $responseString .="<span><strong>".$latestComment[0]['username']."</strong></span>"." ".$HumanDate.":";
-    $responseString.= "<p>".$latestComment[0]['comment_content']."</p>";
+    $responseString .="<p  class='commentBoxInfoBar' type='text' name='comment_content'>";
+    $responseString .="<span><strong>".$latestComment[0]['username']."</strong></span>"." ".$humanDate.":";
+    $responseString.= "<p id='comment_content".$latestComment[0]['comment_id']."'>".$latestComment[0]['comment_content']."</p>";
 
     $responseString.= "<div id='editTextareaHolder".$latestComment[0]['comment_id']."' class='editTextareaHolder'>
     <textarea id='textareaEditBox".$latestComment[0]['comment_id']."' style='width:100%;'> ".$latestComment[0]['comment_content']." </textarea>
@@ -124,14 +124,14 @@ if(isset($_POST['submitReply'])) {
     $newComment_id = create('comment_table', $_POST);
     //logProg($newComment_id);
     $latestComment = getLatestComment($redirectPostValue);
-    $HumanDate = date('F, j, Y', strtotime($latestComment[0]['date']));
+    $humanDate = date('F, j, Y', strtotime($latestComment[0]['date']));
 
     $responseString = "<div class='displayReplyBox' id='displayReplyBox".$latestComment[0]['comment_id']."'>
     <input hidden type='text' name='comment_parent_id' value='comment_id:".$latestComment[0]['comment_parent_id']."'>
     <input hidden type='text' name='commenter_id_aka_user_id' value='".$latestComment[0]['commenter_id_aka_user_id']."'>
     <img class='avatarHolderSinglePage' width='30px' height='30px' src='./assets/images/avatars/".$latestComment[0]['avatar_image']."' alt='".$latestComment[0]['avatar_image']."'>
     <p class='commentBoxInfoBar' type='text' name='comment_content' >
-        <span><strong>".$latestComment[0]['username']."</strong></span>"." ".$HumanDate.":
+        <span><strong>".$latestComment[0]['username']."</strong></span>"." ".$humanDate.":
     </p>
     <p>".$latestComment[0]['comment_content']."</p>";
 

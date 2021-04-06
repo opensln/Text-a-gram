@@ -157,7 +157,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
     }
     </script>
 
-    <script type="text/javascript" src="./ajaxFormSubmissions.js" ></script>
+    <script type="text/javascript" src="./ajaxCrudSubmissions.js" ></script>
     <script type="text/javascript" src="./ButtonHelpers.js" ></script>
 
 </body>

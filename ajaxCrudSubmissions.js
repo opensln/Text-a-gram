@@ -3,7 +3,6 @@ function submitComment() {
 }
 
 $(document).ready(function () {
-
   //----------------------------------------------------------Submit-Reply
   $("body").on("click", ".submitReplyBtn", function (event) {
     event.preventDefault();
@@ -15,15 +14,17 @@ $(document).ready(function () {
     var comment_parent_id = replyBtnId;
     var comment_post_id = $("#reply_post_id" + replyBtnId).val(); //Tagging variables for jQuery
     var commenter_id_aka_user_id = $("#reply_user_id" + replyBtnId).val(); //Tagging variables for jQuery
-    var reply_comment_content_id = $("#reply_comment_content_id" + replyBtnId).val();  //Tagging variables for jQuery
-   
-    var commentBox_id = "#commentBox_id" + (replyBtnId);
-    console.log(commentBox_id);
+    var reply_comment_content_id = $(
+      "#reply_comment_content_id" + replyBtnId
+    ).val(); //Tagging variables for jQuery
 
-// console.log("comment_parent_id" + comment_parent_id);
-// console.log(comment_post_id);
-// console.log(commenter_id_aka_user_id);
-// console.log(reply_comment_content_id);
+    var commentBox_id = "#commentBox_id" + replyBtnId;
+    //console.log(commentBox_id);
+
+    // console.log("comment_parent_id" + comment_parent_id);
+    // console.log(comment_post_id);
+    // console.log(commenter_id_aka_user_id);
+    // console.log(reply_comment_content_id);
 
     if (reply_comment_content_id != "") {
       $.ajax({
@@ -40,7 +41,7 @@ $(document).ready(function () {
         success: function (response) {
           //console.log(response);
           $(commentBox_id).after(response);
-    
+
           var replyFormContainerTag = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
           $(replyFormContainerTag).remove();
           var replyBtnTag = "#replyBtn" + replyBtnId;
@@ -48,13 +49,11 @@ $(document).ready(function () {
 
           var userBtnBarTag = "#userBtnBar" + replyBtnId; //Bring back the edit and delete buttons
           $(userBtnBarTag).css("display", "block");
-
         },
       });
     } else {
       alert("you cannot send an empty message from ajax");
     }
-    
   });
 
   //-----------------------------------------------------------Submit-Comment
@@ -62,12 +61,12 @@ $(document).ready(function () {
     event.preventDefault();
 
     //alert("trigger detection");
-  
+
     var comment_content = $("#comment_content").val();
     var commenter_id_aka_user_id = $("#commenter_id_aka_user_id").val();
     var comment_post_id = $("#comment_post_id").val();
     //alert("Here instead of form submission");
-  
+
     if (comment_content != "") {
       $.ajax({
         method: "POST",
@@ -83,7 +82,7 @@ $(document).ready(function () {
           $("#commentListDiv").prepend(response);
           //TODO - Create the shape of the comment Box
           var commentTextareaTAG = "#comment_content";
-          $(commentTextareaTAG).val('');
+          $(commentTextareaTAG).val("");
         },
       });
     } else {
@@ -96,42 +95,67 @@ $(document).ready(function () {
 $("body").on("click", ".commentUpdateBtn", function (event) {
   event.preventDefault();
 
-var editBtnId = event.target.value;
+  var editBtnId = event.target.value;
 
-var textareaEditBoxVal = $("#textareaEditBox" + editBtnId).val();
-    textareaEditBoxVal += "...(edited)";
-var comment_post_idVal = $("#comment_post_id" + editBtnId).val();
+  var textareaEditBoxVal = $("#textareaEditBox" + editBtnId).val();
+  textareaEditBoxVal += "...(edited)";
+  var comment_post_idVal = $("#comment_post_id" + editBtnId).val();
 
-//console.log("textareaEditBox " + textareaEditBoxVal);
-//console.log("comment_post_idVal " + comment_post_idVal);
+  //console.log("textareaEditBox " + textareaEditBoxVal);
+  //console.log("comment_post_idVal " + comment_post_idVal);
 
-$.ajax({
-  method: "POST",
-  url: "displaysinglepage.php",
-  dataType: "text",
-  data: {
+  $.ajax({
+    method: "POST",
+    url: "displaysinglepage.php",
+    dataType: "text",
+    data: {
       updateComment: 1,
-      comment_id : editBtnId,
+      comment_id: editBtnId,
       comment_content: textareaEditBoxVal,
       comment_post_id: comment_post_idVal,
-  },
-  success: function (response) {
+    },
+    success: function (response) {
       //console.log(response);
       //location.reload();
 
-      var editTextareaHolderTag = "#editTextareaHolder" + editBtnId;
-      $(editTextareaHolderTag).css("display", "none");
+      $("#editTextareaHolder" + editBtnId).css("display", "none");
 
-      var old_comment_contentTag = "#comment_content" + editBtnId;
-      $(old_comment_contentTag).html(response);
-      $(old_comment_contentTag).css("display", "block");
-
-      var replyBtnTag = "#replyBtn" + editBtnId;
-      $(replyBtnTag).css("display", "block");
-    
-      var editFormTag = "#editForm" + editBtnId;
-      $(editFormTag).css("display", "block");
-  },
+      $("#comment_content" + editBtnId).html(response);
+      $("#comment_content" + editBtnId).css("display", "block");
+      $("#replyBtn" + editBtnId).css("display", "block");
+      $("#editForm" + editBtnId).css("display", "block");
+    },
+  });
 });
 
+//---------------------------------------------------------Delete Comment Ajax
+$("body").on("click", ".delBtn", function (event) {
+  event.preventDefault();
+
+  var result = confirm("Are you sure you want to delete this comment?");
+
+  if (result) {
+    //console.log("Value from delBtn " + event.target.value);
+    var delBtnCommentId = event.target.value;
+    //console.log("triggered from delBtn helper");
+
+    var displayReplyBoxTag = "#displayReplyBox" + delBtnCommentId;
+    var commentBoxTag = "#commentBox_id" + delBtnCommentId;
+
+    $.ajax({
+      method: "POST",
+      url: "displaysinglepage.php",
+      dataType: "text",
+      data: {
+        deleteComment: 1,
+        comment_id: delBtnCommentId,
+      },
+      success: function (response) {
+        //console.log(response);
+        location.reload();
+        // $(displayReplyBoxTag).remove();
+        // $(commentBoxTag).remove();
+      },
+    });
+  } //--End if (result)
 });
