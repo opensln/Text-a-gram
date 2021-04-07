@@ -102,7 +102,7 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                         <input id='reply_user_id<?php echo $item['comment_id'] ?>' hidden type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id']?>'>
                         <input id='reply_post_id<?php echo $item['comment_id'] ?>' hidden type='text' name='comment_post_id' value='<?php echo $item['comment_post_id'] ?>'>
                         <textarea id='reply_comment_content_id<?php echo $item['comment_id'] ?>' name='comment_content' placeholder='type your reply here...'></textarea>
-                        <button  id='submitReplyBtn'
+                        <button  id='submitReplyBtn<?php echo $item['comment_id'] ?>'
                                 class='submitReplyBtn btn btn-success'
                                 type=''
                                 name='reply-comment'
