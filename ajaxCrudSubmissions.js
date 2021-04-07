@@ -14,9 +14,7 @@ $(document).ready(function () {
     var comment_parent_id = replyBtnId;
     var comment_post_id = $("#reply_post_id" + replyBtnId).val(); //Tagging variables for jQuery
     var commenter_id_aka_user_id = $("#reply_user_id" + replyBtnId).val(); //Tagging variables for jQuery
-    var reply_comment_content_id = $(
-      "#reply_comment_content_id" + replyBtnId
-    ).val(); //Tagging variables for jQuery
+    var reply_comment_content_id = $("#reply_comment_content_id" + replyBtnId).val(); //Tagging variables for jQuery
 
     var commentBox_id = "#commentBox_id" + replyBtnId;
     //console.log(commentBox_id);

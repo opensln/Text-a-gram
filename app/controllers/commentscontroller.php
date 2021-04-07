@@ -3,28 +3,17 @@
 // include './app/database/dbRequests.php';
 $errors = array();
 
-
-$editing_id = '';
-$editing_text = '';
-$update = false;
-
-
-
 //------------------------------------------------Submit & Prepare Comment
 
 if(isset($_POST['submitComment'])) {
    unset($_POST['submitComment']);
 
     $errors = validateComments($_POST);
-
     $redirectPostValue = $_POST['comment_post_id'];
-
     //logProg($errors);
 
     if (count($errors) === 0) {
-
     //logProg($_POST);
-    //logProg('current redirect value: ' .$redirectPostValue);
   
     $newComment_id = create('comment_table', $_POST);
     //logProg($newComment_id);
@@ -32,7 +21,6 @@ if(isset($_POST['submitComment'])) {
 
     $humanDate = date('F, j, Y', strtotime($latestComment[0]['date']));
     //logProg($latestComment);
-    //exit($latestComment[0]['comment_content']);
     $responseString = "<div class='displayCommentBox' id='commentBox_id".$latestComment[0]['comment_id']."'>";
     $responseString .="<input hidden id='comment_post_id".$latestComment[0]['comment_id']."' type='text' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."' >";
     $responseString .="<input hidden id='commenter_id_aka_user_id' value".$latestComment[0]['comment_id']."' type='text' name='commenter_id_aka_user_id' value=".$latestComment[0]['commenter_id_aka_user_id'].">";
@@ -75,20 +63,17 @@ if(isset($_POST['submitComment'])) {
      $responseString.= "</div>";
     exit($responseString);
     //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
-    //logProg($user_id);
   
     } else {
     logProg($errors);
     
     header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply&emptycomment=true");
-    
     }
 }
 
 
 //--------------------------------------------------Show Dynamic Reply Form
 if(isset($_POST['showReplyForm'])) {
- 
     //logProg($_POST);
 
     $responseString = "<div id='replyFormContainer_id".$_POST['comment_parent_id']."' class='dynamicReplyFormContainer'>";
@@ -105,7 +90,6 @@ if(isset($_POST['showReplyForm'])) {
     $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
     $responseString.= "</form></div>";
 
-  
     exit($responseString);
 }
 
@@ -148,10 +132,9 @@ if(isset($_POST['submitReply'])) {
         //End Reply Edit Form-->
     $responseString.= "</div>";
 
-    //TODO Build dynamic replyDisplayBox from here to send back to the ajax
     exit($responseString);
     } else {
-    //logProg($errors);
+    exit("Sorry, there seems to be a problem with this feature");
     }
  }
 
@@ -161,18 +144,13 @@ if(isset($_POST['deleteComment'])) {
     //logProg($_POST);
 
     $deleting_id = $_POST['comment_id'];
-    //logProg($deleting_id);
- 
     // $redirectPostValue = $_POST['comment_post_id'];
-    //logProg($redirectPostValue);
 
     $deleting_info = delete('comment_table', $deleting_id);
     //logProg($deleting_info);
     exit("entry ".$deleting_id." Deleted");
-    header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
+    //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
 }
-
-
 
 //--------------------------------------------------------Update--comment
 
@@ -191,16 +169,4 @@ if(isset($_POST['updateComment'])) {
     //logProg($editedComment);
     exit($editedComment['comment_content']);
     //header("Location: ./displaysinglepage.php?post_id=$redirectPostValue&parentId&reply");
-
 }
-
-// //--Fetch--comment--for updating (PHP)
-
-// if(isset($_GET['editing_id'])) {
-//     $editing_id = $_GET['editing_id'];
-
-//     $editing_info = selectOne('comment_table', ['comment_id' => $_GET['editing_id']]);
-//     //logProg($editing_info);
-//     $editing_text = $editing_info['comment_content'];
-//     $update = true;
-// }
