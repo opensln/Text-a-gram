@@ -40,9 +40,10 @@ $("body").on("click", ".cancelDynamicReplyBtn", function (event) {
 
   var replyBtnId = event.target.value;
   
+  $("#userBtnBar" + replyBtnId).css("display", "block");
+  $("#replyFormContainer_id" + replyBtnId).css("display", "none");
   $("#replyBtn" + replyBtnId).removeAttr("disabled");
-  $("#replyFormContainer_id" + replyBtnId).remove();
-  $("#userBtnBar" + replyBtnId).ss("display", "block");
+ 
 });
 
 //----------------------------------------------------------------Show Update Comment TextArea

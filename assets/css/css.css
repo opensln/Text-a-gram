@@ -222,10 +222,10 @@ p {
     margin-bottom: 0;
 }
 
-.commentFormContainer .commentUpdateBtn,
-.commentFormContainer .cancelUpdateBtn,
 .dynamicReplyFormContainer .submitReplyBtn,
-.dynamicReplyFormContainer .cancelDynamicReplyBtn
+.dynamicReplyFormContainer .cancelDynamicReplyBtn,
+.editTextareaHolder .commentUpdateBtn,
+.editTextareaHolder .cancelUpdateBtn
 {
     box-sizing: border-box;
     width: 49%;
