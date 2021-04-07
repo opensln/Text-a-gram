@@ -19,11 +19,6 @@ $(document).ready(function () {
     var commentBox_id = "#commentBox_id" + replyBtnId;
     //console.log(commentBox_id);
 
-    // console.log("comment_parent_id" + comment_parent_id);
-    // console.log(comment_post_id);
-    // console.log(commenter_id_aka_user_id);
-    // console.log(reply_comment_content_id);
-
     if (reply_comment_content_id != "") {
       $.ajax({
         method: "POST",
@@ -40,14 +35,10 @@ $(document).ready(function () {
           //console.log(response);
           $(commentBox_id).after(response);
 
-          var replyFormContainerTag = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
-          $(replyFormContainerTag).css("display","none");
+          $("#replyFormContainer_id" + replyBtnId).css("display","none");
           $("#reply_comment_content_id" + replyBtnId).val("");
-          var replyBtnTag = "#replyBtn" + replyBtnId;
-          $(replyBtnTag).removeAttr("disabled"); //Re-enable the reply button
-
-          var userBtnBarTag = "#userBtnBar" + replyBtnId; //Bring back the edit and delete buttons
-          $(userBtnBarTag).css("display", "block");
+          $("#replyBtn" + replyBtnId).removeAttr("disabled"); //Re-enable the reply button
+          $("#userBtnBar" + replyBtnId).css("display", "block"); //Bring back the edit and delete buttons
         },
       });
     } else {
