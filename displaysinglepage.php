@@ -97,6 +97,20 @@ $relatedComments = getRelatedComments($_GET['post_id']);
                             >Reply</button>
                 <?php endif;?>
 
+                <div id='replyFormContainer_id<?php echo $item['comment_id'] ?>' class='dynamicReplyFormContainer' style='display:none'>
+                        <form method='POST' onsubmit='return submitComment()'>
+                        <input id='reply_user_id<?php echo $item['comment_id'] ?>' hidden type='text' name='commenter_id_aka_user_id' value='<?php echo $_SESSION['user_id']?>'>
+                        <input id='reply_post_id<?php echo $item['comment_id'] ?>' hidden type='text' name='comment_post_id' value='<?php echo $item['comment_post_id'] ?>'>
+                        <textarea id='reply_comment_content_id<?php echo $item['comment_id'] ?>' name='comment_content' placeholder='type your reply here...'></textarea>
+                        <button  id='submitReplyBtn'
+                                class='submitReplyBtn btn btn-success'
+                                type=''
+                                name='reply-comment'
+                                value='<?php echo $item['comment_id'] ?>'
+                                >Submit Reply</button>
+                        <button class='cancelDynamicReplyBtn btn btn-danger float-right' value='<?php echo $item['comment_id'] ?>' onclick=''>Cancel Reply</button>
+                        </form></div>
+
                     <!--If the user is logged in and it is their own comment then show the edit and delete buttons-->
                         <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $item['commenter_id_aka_user_id']): ?>
                             <div id='userBtnBar<?php echo $item['comment_id'] ?>' class='userBtnBar'>

@@ -4,29 +4,33 @@
 $("body").on("click", ".dynamicReplyBtn", function (event) {
     event.preventDefault();  
     var replyBtnId = event.target.value;
+    
+    $("#userBtnBar" + replyBtnId).css("display", "none");
+    $("#replyFormContainer_id" + replyBtnId).css("display", "block");
+    $("#replyBtn" + replyBtnId).prop("disabled", "true");
 
     var comment_post_id = $("#comment_post_id" + replyBtnId).val();
     //var comment_post_id = event.target.getAttribute("data-comment_post_id"); //alternative to jQuery Tag
 
-    $.ajax({
-      method: "POST",
-      url: "displaysinglepage.php",
-      dataType: "text",
-      data: {
-          showReplyForm: 1,
-          comment_parent_id :replyBtnId,
-          comment_post_id: comment_post_id,
-      },
-      success: function (response) {
-          //console.log(response);
+    // $.ajax({
+    //   method: "POST",
+    //   url: "displaysinglepage.php",
+    //   dataType: "text",
+    //   data: {
+    //       showReplyForm: 1,
+    //       comment_parent_id :replyBtnId,
+    //       comment_post_id: comment_post_id,
+    //   },
+    //   success: function (response) {
+    //       //console.log(response);
 
-          $("#userBtnBar" + replyBtnId).css("display", "none");
-          $("#replyFormContainer_id" + replyBtnId).css("display", "block");
-          $("#replyBtn" + replyBtnId).prop("disabled", "true");
+    //       $("#userBtnBar" + replyBtnId).css("display", "none");
+    //       $("#replyFormContainer_id" + replyBtnId).css("display", "block");
+    //       $("#replyBtn" + replyBtnId).prop("disabled", "true");
 
-          $("#commentBox_id" + replyBtnId).append(response);
-      },
-    });
+    //       $("#commentBox_id" + replyBtnId).append(response);
+    //   },
+    // });
 
 });
 

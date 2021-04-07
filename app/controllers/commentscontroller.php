@@ -49,6 +49,20 @@ if(isset($_POST['submitComment'])) {
                         data-comment_post_id='".$latestComment[0]['comment_post_id']."'
                         >Reply</button>";
 
+    $responseString.=  "<div id='replyFormContainer_id".$latestComment[0]['comment_id']."' class='dynamicReplyFormContainer' style='display:none'>
+                        <form method='POST' onsubmit='return submitComment()'>
+                        <input id='reply_user_id".$latestComment[0]['comment_id']."' hidden type='text' name='commenter_id_aka_user_id' value='".$_SESSION['user_id']."'>
+                        <input id='reply_post_id".$latestComment[0]['comment_id']."' hidden type='text' name='comment_post_id' value='".$latestComment[0]['comment_post_id']."'>
+                        <textarea id='reply_comment_content_id".$latestComment[0]['comment_id']."' name='comment_content' placeholder='type your reply here...'></textarea>
+                        <button  id='submitReplyBtn'
+                                class='submitReplyBtn btn btn-success'
+                                type=''
+                                name='reply-comment'
+                                value='".$latestComment[0]['comment_id']."'
+                                >Submit Reply</button>
+                        <button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$latestComment[0]['comment_id']."' onclick=''>Cancel Reply</button>
+                        </form></div>";
+
     //If the user is logged in "NOT REPLYING" and it is their own comment then show the edit and delete buttons-->
     if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $latestComment[0]['commenter_id_aka_user_id']) { //If(3)-->
     $responseString.= "<div id='userBtnBar".$latestComment[0]['comment_id']."' class='userBtnBar'>
@@ -72,26 +86,26 @@ if(isset($_POST['submitComment'])) {
 }
 
 
-//--------------------------------------------------Show Dynamic Reply Form
-if(isset($_POST['showReplyForm'])) {
-    //logProg($_POST);
+// //--------------------------------------------------Show Dynamic Reply Form
+// if(isset($_POST['showReplyForm'])) {
+//     //logProg($_POST);
 
-    $responseString = "<div id='replyFormContainer_id".$_POST['comment_parent_id']."' class='dynamicReplyFormContainer'>";
-    $responseString.= "<form method='POST' onsubmit='return submitComment()'>";
-    $responseString.= "<input id='reply_user_id".$_POST['comment_parent_id']."' hidden type='text' name='commenter_id_aka_user_id' value='".$_SESSION['user_id']."'>";
-    $responseString.= "<input id='reply_post_id".$_POST['comment_parent_id']."' hidden type='text' name='comment_post_id' value='".$_POST['comment_post_id']."'>";
-    $responseString.= "<textarea id='reply_comment_content_id".$_POST['comment_parent_id']."' name='comment_content' placeholder='type your reply here...'></textarea>";
-    $responseString.= "<button  id='submitReplyBtn'
-                                class='submitReplyBtn btn btn-success'
-                                type=''
-                                name='reply-comment'
-                                value='".$_POST['comment_parent_id']."'
-                                >Submit Reply</button>";
-    $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
-    $responseString.= "</form></div>";
+//     $responseString = "<div id='replyFormContainer_id".$_POST['comment_parent_id']."' class='dynamicReplyFormContainer'>";
+//     $responseString.= "<form method='POST' onsubmit='return submitComment()'>";
+//     $responseString.= "<input id='reply_user_id".$_POST['comment_parent_id']."' hidden type='text' name='commenter_id_aka_user_id' value='".$_SESSION['user_id']."'>";
+//     $responseString.= "<input id='reply_post_id".$_POST['comment_parent_id']."' hidden type='text' name='comment_post_id' value='".$_POST['comment_post_id']."'>";
+//     $responseString.= "<textarea id='reply_comment_content_id".$_POST['comment_parent_id']."' name='comment_content' placeholder='type your reply here...'></textarea>";
+//     $responseString.= "<button  id='submitReplyBtn'
+//                                 class='submitReplyBtn btn btn-success'
+//                                 type=''
+//                                 name='reply-comment'
+//                                 value='".$_POST['comment_parent_id']."'
+//                                 >Submit Reply</button>";
+//     $responseString.= "<button class='cancelDynamicReplyBtn btn btn-danger float-right' value='".$_POST['comment_parent_id']."' onclick=''>Cancel Reply</button>";
+//     $responseString.= "</form></div>";
 
-    exit($responseString);
-}
+//     exit($responseString);
+// }
 
 //--------------------------------------------------------Submit & Prepare Reply
 

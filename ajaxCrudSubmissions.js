@@ -41,7 +41,8 @@ $(document).ready(function () {
           $(commentBox_id).after(response);
 
           var replyFormContainerTag = "#replyFormContainer_id" + replyBtnId; //--remember the # in future
-          $(replyFormContainerTag).remove();
+          $(replyFormContainerTag).css("display","none");
+          $("#reply_comment_content_id" + replyBtnId).val("");
           var replyBtnTag = "#replyBtn" + replyBtnId;
           $(replyBtnTag).removeAttr("disabled"); //Re-enable the reply button
 
