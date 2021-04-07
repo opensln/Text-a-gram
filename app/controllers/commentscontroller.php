@@ -35,7 +35,7 @@ if(isset($_POST['submitComment'])) {
     class='commentUpdateBtn btn btn-success'
     value='".$latestComment[0]['comment_id']."'
     >Update it</button>
-    <a class='cancelUpdateBtn btn btn-danger float-right'>Cancel Update</a>
+    <button class='cancelUpdateBtn btn btn-danger float-right' value='".$latestComment[0]['comment_id']."' >Cancel Update</button>
     </div>";
 
     $responseString.= "<button
